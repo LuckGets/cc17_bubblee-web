@@ -23,6 +23,10 @@ function SignupPage() {
   const handleChangeInput = (e) =>
     setInput({ ...input, [e.target.name]: e.target.value });
 
+  const handleOnSubmitForm = (e) => {
+    e.preventDefault()
+  }
+
   return (
     <>
       <div className="flex items-center min-h-screen ">
@@ -55,18 +59,18 @@ function SignupPage() {
               </div>
             </div>
           </div>
-          <div>
+          <form onSubmit={handleOnSubmitForm}>
             <SignupForm input={input} handleChangeInput={handleChangeInput} />
             <div className="flex flex-col gap-5">
             <p className="self-end text-[0.8rem]">Already have an account?</p>
               <div className="flex gap-5">
-                <button className="bg-red-700 py-2 px-10 rounded-lg">
+                <button type="submit" className="bg-red-700 py-2 px-10 rounded-lg">
                   Signup
                 </button>
                 <Button onClick={() => setOpenModal(true)}>Login</Button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       {openModal && (

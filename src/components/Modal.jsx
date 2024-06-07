@@ -1,5 +1,4 @@
 import React from "react";
-import Input from "./Input";
 
 function Modal({ children, onClose, title, width }) {
   return (
