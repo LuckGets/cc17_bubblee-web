@@ -16,7 +16,7 @@ function AuthenHeader({ user }) {
         <div className="w-5">
           <UserIcon />
         </div>
-        <div>{user}</div>
+        <div>Mx. {user.split(" ") ? user.split(" ")[1] : user}</div>
       </div>
       {openDropdown && <Dropdown />}
     </div>

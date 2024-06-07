@@ -5,7 +5,17 @@ export default {
     "./src/**/*.{js,jsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage : {
+        'hero-pattern': "url('/src/assets/images/van-bg.jpg')",
+      },
+      colors : {
+        "bubblee-light-green" : "#A2B67C",
+        "bubblee-old-green" : "#6F8349",
+        "bubblee-orange" : "#DD6621",
+        "bubblee-light-gray" : "#ECECEC"
+      }
+    },
   },
   plugins: [],
 }

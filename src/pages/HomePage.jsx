@@ -1,9 +1,10 @@
 import React from "react";
+import HeroSection from "../home-section/hero-section/HeroSection";
 
 function Homepage() {
   return (
-    <div className="">
-      <h1 className="text-red-500">HomePage</h1>
+    <div className="backgroundImage">
+      <HeroSection />
     </div>
   );
 }

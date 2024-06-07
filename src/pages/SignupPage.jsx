@@ -1,15 +1,28 @@
 import React from "react";
 import { MailIcon, PhoneIcon } from "../assets/icons/icons";
-import Input from "../components/Input";
 import Button from "../components/Button";
 import { useState } from "react";
 import SignupForm from "../authentication/components/SignupForm";
 import Modal from "../components/Modal";
 import LoginForm from "../authentication/components/LoginForm";
+import { registerSchema } from "../validation/joi-schema/joi";
+import validator from "../validation/validator";
+import authenApi from "../axios/authen";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import userApi from "../axios/user";
+import useAuthenContext from "../authentication/hooks/useAuthenContext";
 
 const INIT_INPUT = {
   name: "",
-  gender: "",
+  email: "",
+  phone: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const INIT_ERROR = {
+  name: "",
   email: "",
   phone: "",
   password: "",
@@ -18,14 +31,35 @@ const INIT_INPUT = {
 
 function SignupPage() {
   const [input, setInput] = useState(INIT_INPUT);
+  const [errInput, setErrInput] = useState(INIT_ERROR);
   const [openModal, setOpenModal] = useState(false);
+
+  const { userLogin } = useAuthenContext();
+
+  const navigate = useNavigate();
 
   const handleChangeInput = (e) =>
     setInput({ ...input, [e.target.name]: e.target.value });
 
-  const handleOnSubmitForm = (e) => {
-    e.preventDefault()
-  }
+  const handleOnSubmitForm = async (e) => {
+    try {
+      e.preventDefault();
+      const error = validator(registerSchema, input);
+      if (error) {
+        return setErrInput(error);
+      }
+      setErrInput("");
+      await authenApi.register(input);
+      await userLogin({emailOrPhone : input.phone, password : input.password})
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      if (err instanceof AxiosError) {
+        console.log(err.message);
+        return;
+      }
+    }
+  };
 
   return (
     <>
@@ -60,11 +94,18 @@ function SignupPage() {
             </div>
           </div>
           <form onSubmit={handleOnSubmitForm}>
-            <SignupForm input={input} handleChangeInput={handleChangeInput} />
+            <SignupForm
+              error={errInput}
+              input={input}
+              handleChangeInput={handleChangeInput}
+            />
             <div className="flex flex-col gap-5">
-            <p className="self-end text-[0.8rem]">Already have an account?</p>
+              <p className="self-end text-[0.8rem]">Already have an account?</p>
               <div className="flex gap-5">
-                <button type="submit" className="bg-red-700 py-2 px-10 rounded-lg">
+                <button
+                  type="submit"
+                  className="bg-red-700 py-2 px-10 rounded-lg"
+                >
                   Signup
                 </button>
                 <Button onClick={() => setOpenModal(true)}>Login</Button>
