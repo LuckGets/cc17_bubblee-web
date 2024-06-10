@@ -1,7 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function BookSubHeader() {
+  const [isBookPage, setIsBookPage] = useState(true)
+
   return (
     <div className="min-h-[8rem] flex flex-col justify-between items-center">
       <div></div>
@@ -11,9 +14,9 @@ function BookSubHeader() {
           your reservation.
         </p>
       </div>
-      <div className="flex w-full justify-center gap-20 py-2">
-        <Link>Book Page</Link>
-        <Link>Manage reservation</Link>
+      <div className="flex w-full items-stretch justify-center gap-20 py-2">
+        <Link className="border-b-2 border-black" to="/book">Book Page</Link>
+        <Link to="/reserve">Manage reservation</Link>
       </div>
     </div>
   );

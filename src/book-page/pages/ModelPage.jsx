@@ -2,13 +2,28 @@ import React from "react";
 import Button from "../components/Button";
 import ModelCard from "../components/ModelCard";
 import ModelDetails from "../components/ModelDetails";
+import { LeftArrowSlide, RightArrowSlide } from "../../assets/icons/icons";
 
 function ModelPage() {
   return (
-    <div className="flex flex-col justify-center">
-      <div className="flex gap-5">
-        <ModelDetails/>
-        <ModelCard />
+    <div className="w-full flex flex-col item-center justify-center">
+      <div className="flex justify-center gap-5">
+        <ModelDetails />
+        <div className="flex items-center">
+          <div
+            role="button"
+            className="p-1 rounded-full w-[3rem] hover:bg-gray-300 flex justify-center items-center"
+          >
+            <LeftArrowSlide />
+          </div>
+          <ModelCard />
+          <div
+            role="button"
+            className="p-1 rounded-full w-[3rem] hover:bg-gray-300 flex justify-center items-center"
+          >
+            <RightArrowSlide />
+          </div>
+        </div>
       </div>
       <div className="w-1/2 py-10 flex justify-between">
         <div className="flex gap-5">
@@ -17,7 +32,7 @@ function ModelPage() {
           </Button>
           <Button to="/">Cancel</Button>
         </div>
-        <Button to="/book/model" text="white" bg="black">
+        <Button to="/book/confirm" text="white" bg="black">
           Continue
         </Button>
       </div>

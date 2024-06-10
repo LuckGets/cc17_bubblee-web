@@ -1,20 +1,32 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 const bgMap = {
-  "white" : "bg-white",
-  "black" : "bg-black"
-}
+  white: "bg-white",
+  black: "bg-black",
+  primary: "bg-bubblee-orange",
+  green: "bg-bubblee-old-green",
+};
 
 const colorMap = {
-  "white" : "text-white",
-  "black" : "text-black"
-}
+  white: "text-white",
+  black: "text-black",
+};
 
-function Button({children, bg, text, to}) {
+const borderMap = {
+  white: "border-white",
+  black: "border-black"
+};
+
+function Button({ children, bg, text, to, border }) {
   return (
-    <Link to={to} className={`flex justify-center items-center ${colorMap[text]} ${bgMap[bg]} px-6 py-3  rounded-2xl border-black border-2`}>{children}</Link>
-  )
+    <Link
+      to={to}
+      className={`flex justify-center items-center ${colorMap[text]} ${bgMap[bg]} ${borderMap[border]} px-6 py-3  rounded-2xl border-2 hover:brightness-90`}
+    >
+      {children}
+    </Link>
+  );
 }
 
-export default Button
+export default Button;

@@ -26,9 +26,9 @@ function Header() {
         <div className="px-5 text-white">
           <p>Services</p>
         </div>
-        <div className="px-5 text-white">
+        <Link to="/book" className="px-5 text-white">
           <p>Booking</p>
-        </div>
+        </Link>
         <div className="px-5 text-white">
           <p>Drive with us</p>
         </div>

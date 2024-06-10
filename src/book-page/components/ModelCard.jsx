@@ -7,7 +7,7 @@ import CarImageCard from "./CarImageCard";
 
 function ModelCard() {
   return (
-    <div className="flex flex-col items-center border-2 border-black px-2">
+    <div className="flex flex-col items-center ">
       <div>
         <div className="min-w-[30rem]">
           <img className="w-full" src={vanImage} />
