@@ -3,12 +3,7 @@ import Input from "../../../components/Input";
 import { useState } from "react";
 import Button from "../Button";
 
-function ContactInform({
-  error,
-  guestInfo,
-  setGuestInfo,
-  handleSubmit,
-}) {
+function ContactInform({ error, guestInfo, setGuestInfo, handleSubmit }) {
   return (
     <div>
       <h1 className="text-3xl">Contact Information</h1>
@@ -29,7 +24,9 @@ function ContactInform({
             p="0"
           />
         </div>
-        <small className="text-red-400">{error.name ||  guestInfo.name ? "" : "*This field is required" } </small>
+        <small className="text-red-400">
+          {guestInfo.name ? error.name : "*This field is required"}
+        </small>
         <div className="flex gap-3">
           <p>Email :</p>
           <Input
@@ -40,7 +37,9 @@ function ContactInform({
             p="0"
           />
         </div>
-        <small className="text-red-400">{error.email || guestInfo.email ? "" : "*This field is required"}</small>
+        <small className="text-red-400">
+          {guestInfo.email ? error.email : "*This field is required"}
+        </small>
         <div className="flex gap-3">
           <p>Phone :</p>
           <Input
@@ -51,7 +50,9 @@ function ContactInform({
             p="0"
           />
         </div>
-        <small className="text-red-400">{error.phone || guestInfo.phone ? "" : "*This field is required"}</small>
+        <small className="text-red-400">
+          {guestInfo.phone ? error.phone : "This field is required"}
+        </small>
         <div className="w-1/3">
           <button
             className="bg-bubblee-orange flex justify-center items-center px-6 py-3  rounded-2xl text-white"

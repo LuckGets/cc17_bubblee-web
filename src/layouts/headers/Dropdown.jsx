@@ -18,8 +18,8 @@ export default function Dropdown() {
     "
     >
       <DropdownItem>User profile</DropdownItem>
-      <DropdownItem>History</DropdownItem>
-      <DropdownItem>Book new trip</DropdownItem>
+      <DropdownItem to="/reserve">History</DropdownItem>
+      <DropdownItem to="/book">Book new trip</DropdownItem>
       <DropdownItem onClick={logout}>Log out</DropdownItem>
     </div>
   );

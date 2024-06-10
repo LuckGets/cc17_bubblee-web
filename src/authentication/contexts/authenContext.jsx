@@ -40,6 +40,7 @@ export default function AuthenContextProvider({ children }) {
     } catch (err) {
       console.log(err);
       if (err instanceof AxiosError) {
+        alert(err.response.data.message)
         const message =
           response.statusCode === 400
             ? "Login unsuccess. please try again"

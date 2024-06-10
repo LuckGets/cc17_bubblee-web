@@ -8,6 +8,7 @@ import CustomerInform from "../components/confirm-page/CustomerInform";
 import { useState } from "react";
 import { guestSchema } from "../../validation/joi-schema/joi";
 import validator from "../../validation/validator";
+import userApi from "../../axios/user";
 
 const INIT_GUEST = {
   name: "",
@@ -26,29 +27,59 @@ function ConfirmModelPage() {
 
   const [guestInfo, setGuestInfo] = useState(INIT_GUEST);
   const [errorGuest, setErrorGuest] = useState(INIT_ERROR);
-  const [authenGuest, setAuthenGuest] = useState(false)
+  const [authenGuest, setAuthenGuest] = useState(false);
 
   const handleChangeInput = (e) =>
     setGuestInfo({ ...guestInfo, [e.target.name]: e.target.value });
 
-  const handleSubmitGuest = (e) => {
-    e.preventDefault();
-    const error = validator(guestSchema, guestInfo);
-    if (error) {
-      return setErrorGuest(error);
+  const handleSubmitGuest = async (e) => {
+    try {
+      e.preventDefault();
+      const error = validator(guestSchema, guestInfo);
+      if (error) {
+        return setErrorGuest(error);
+      }
+      setErrorGuest({ ...INIT_ERROR });
+
+      const response = await userApi.findUser(guestInfo);
+      if (response.data.user) {
+        const { user } = response.data;
+        if (user.email === guestInfo.email) {
+          return setErrorGuest({
+            ...errorGuest,
+            email:
+              "This email already have registered. If it's your email. Please login for access our service.",
+          });
+        }
+
+        if (user.phone === guestInfo.phone) {
+          return setErrorGuest({
+            ...errorGuest,
+            phone:
+              "This phone already have registered. If it's your phone. Please login for access our service.",
+          });
+        }
+      }
+      console.log("hello")
+      setAuthenGuest(true);
+    } catch (err) {
+      console.log(err);
     }
-    setErrorGuest({ ...INIT_ERROR });
-    setAuthenGuest(true)
   };
 
-  const handleEditInfo = () => setAuthenGuest(false)
+  const handleEditInfo = () => setAuthenGuest(false);
 
   return (
     <div className="p-10 flex justify-between gap-10">
       <div className="w-full flex flex-col justify-between">
         {authenUser ? (
-          <CustomerInform handleEditInfo/>
-        ) : authenGuest ? <CustomerInform handleEditInfo={handleEditInfo} guestInfo={guestInfo}/> : (
+          <CustomerInform handleEditInfo={handleEditInfo} />
+        ) : authenGuest ? (
+          <CustomerInform
+            handleEditInfo={handleEditInfo}
+            guestInfo={guestInfo}
+          />
+        ) : (
           <ContactInform
             error={errorGuest}
             handleSubmit={handleSubmitGuest}

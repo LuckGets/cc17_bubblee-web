@@ -3,8 +3,17 @@ import Button from "../components/Button";
 import ModelCard from "../components/ModelCard";
 import ModelDetails from "../components/ModelDetails";
 import { LeftArrowSlide, RightArrowSlide } from "../../assets/icons/icons";
+import useBookContext from "../hooks/useBookContext";
+import { useEffect } from "react";
 
 function ModelPage() {
+  const { fetchCarImage, carImage } = useBookContext();
+
+  useEffect(() => {
+    fetchCarImage();
+    console.log(carImage);
+  }, []);
+
   return (
     <div className="w-full flex flex-col item-center justify-center">
       <div className="flex justify-center gap-5">
