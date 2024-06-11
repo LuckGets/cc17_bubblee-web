@@ -120,7 +120,7 @@ function ConfirmModelPage() {
         </div>
       </div>
       <div className="w-full border-2 border-black">
-        <ModelCard />
+        {/* <ModelCard /> */}
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import Router from "./Router/Router";
 import AuthenContextProvider from "./authentication/contexts/authenContext";
 import { Suspense } from "react";

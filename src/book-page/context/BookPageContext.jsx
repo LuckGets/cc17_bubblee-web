@@ -7,21 +7,21 @@ export const BookPageContext = createContext();
 
 export default function BookPageContextProvider({ children }) {
   const [carImage, setCarImage] = useState([]);
+  const [carDetails, setCarDetails] = useState([]);
 
   const fetchCarImage = async () => {
-    const carImageArr = await carsApi.getCarImage();
-    const newCarImageArr = carImageArr.reduce((acc,curr) => {
-      if (curr.modelId !== acc.modelId) {
-        
-      }
-    }, [])
-    // setCarImage(carImageArr.data);
-    console.log(carImageArr.data)
-    console.log(carImage);
-  };
+    const { data } = await carsApi.getCarImage();
+    setCarImage(data);
+    const response = await carsApi.getCarDetails();
+    setCarDetails(response.data)
+  }; 
+
+  useEffect(() => {
+    fetchCarImage();
+  }, []);
 
   return (
-    <BookPageContext.Provider value={{ fetchCarImage, carImage }}>
+    <BookPageContext.Provider value={{ fetchCarImage, carImage, carDetails }}>
       {children}
     </BookPageContext.Provider>
   );

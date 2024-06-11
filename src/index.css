@@ -8,4 +8,8 @@
   font-weight: 400;
 }
 
-
+@layer components {
+  .map-container {
+    @apply min-w-[50rem]  min-h-[50rem];
+  }
+}
