@@ -7,8 +7,18 @@ import useBookContext from "../hooks/useBookContext";
 import { useEffect } from "react";
 import { useState } from "react";
 import carsApi from "../../axios/cars";
+import Modal from "../../components/Modal";
+import useReserveContext from "../hooks/useReserveContext";
+import { useNavigate } from "react-router-dom";
 
 const INIT_DETAILS = {
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+};
+
+const INIT_TEXT = {
   1: false,
   2: false,
   3: false,
@@ -19,6 +29,14 @@ function ModelPage() {
   const { carDetails } = useBookContext();
   const [openDetails, setOpenDetails] = useState(INIT_DETAILS);
   const [carImg, setCarImg] = useState([]);
+  const [isTextShow, setIsTextShow] = useState(INIT_TEXT);
+  const [carModel, setCarModel] = useState(null);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const { setModelId } = useReserveContext();
+
+  const navigate = useNavigate();
 
   const handleOnClickOpenDetails = async (e) => {
     try {
@@ -31,62 +49,80 @@ function ModelPage() {
         ...INIT_DETAILS,
         [e.target.id]: !INIT_DETAILS[e.target.id],
       });
-      console.log(openDetails);
+      setCarModel(e.target.id);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // const handleOpenDetails = (e) => {
-  //   return setOpenDetails({
-  //     ...INIT_DETAILS,
-  //     [e.target.id]: !INIT_DETAILS[e.target.id],
-  //   });
-  // };
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    if (!carModel) {
+      return console.log("please choose one car model");
+    }
+    setModelId(carModel);
+    navigate("/book/confirm");
+  };
 
   return (
-    <div className="w-1/2 flex flex-col item-center justify-center p-10">
-      <div
-        role="button"
-        className={`grid 
-         gap-5 border-2 border-black`}
-      >
-        {carDetails.map((item) => {
-          return (
-            <div className="relative">
+    <>
+      <div className="flex flex-col item-center justify-center p-10">
+        <div
+          role="button"
+          className="grid grid-cols-2
+         gap-5 gap-y-10 "
+        >
+          {carDetails.map((item) => {
+            return (
               <div
                 id={item.id}
-                onClick={handleOnClickOpenDetails}
-                className="absolute w-full h-full"
-              ></div>
-              <div
-                className={`flex items-center border-black border-2 bg-yellow-200`}
+                onMouseEnter={() =>
+                  setIsTextShow({ ...INIT_TEXT, [item.id]: true })
+                }
+                onMouseLeave={() =>
+                  setIsTextShow({ ...INIT_TEXT, [item.id]: false })
+                }
+                className={`relative 
+             border-2 shadow-md rounded-lg hover:shadow-xl`}
               >
-                <ModelCard
-                  key={item.carImage[0]?.id}
+                <div
+                  onClick={handleOnClickOpenDetails}
                   id={item.id}
-                  src={item.carImage[0]?.imagePath}
-                  carImg={carImg}
-                  openDetails={openDetails}
-                />
-                <ModelDetails details={item} />
+                  className="absolute w-full h-full"
+                ></div>
+                <div className={`flex justify-between gap-3`}>
+                  <ModelCard
+                    key={item.carImage[0]?.id}
+                    id={item.id}
+                    src={item.carImage[0]?.imagePath}
+                    carImg={carImg}
+                    openDetails={openDetails}
+                  />
+                  <div className="flex-1 p-5">
+                    <ModelDetails
+                      id={item.id}
+                      isTextShow={isTextShow}
+                      details={item}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="py-10 flex justify-between">
-        <div className="flex gap-5">
-          <Button to="/book/main" bg="white">
-            Back
-          </Button>
-          <Button to="/">Cancel</Button>
+            );
+          })}
         </div>
-        <Button to="/book/confirm" text="white" bg="black">
-          Continue
-        </Button>
+        <div className="py-10 flex justify-between">
+          <div className="flex gap-5">
+            <Button to="/book/main" bg="white">
+              Back
+            </Button>
+            <Button to="/">Cancel</Button>
+          </div>
+          <Button onClick={handleSubmitForm} text="white" bg="black">
+            Continue
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

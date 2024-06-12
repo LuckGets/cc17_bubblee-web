@@ -15,12 +15,13 @@ const colorMap = {
 
 const borderMap = {
   white: "border-white",
-  black: "border-black"
+  black: "border-black",
 };
 
-function Button({ children, bg, text, to, border }) {
+function Button({ children, bg, text, to, border, onClick }) {
   return (
     <Link
+      onClick={onClick}
       to={to}
       className={`flex justify-center items-center ${colorMap[text]} ${bgMap[bg]} ${borderMap[border]} px-6 py-3  rounded-2xl border-2 hover:brightness-90`}
     >

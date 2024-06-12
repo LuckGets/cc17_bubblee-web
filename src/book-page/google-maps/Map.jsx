@@ -17,41 +17,52 @@ import Direction from "./Direction";
 
 function MapRenderer({ pickup, dropoff }) {
   const center = { lat: 13.746389, lng: 100.535004 };
-  const [open, setOpen] = useState(false);
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [secondMarkerRef, secondMarker] = useAdvancedMarkerRef();
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    if (pickup && dropoff) setOpen(false);
+  }, [pickup, dropoff]);
 
   return (
-    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-      <div className="map-container">
-        <Map
-          mapId={import.meta.env.VITE_MAPS_ID}
-          defaultCenter={center}
-          defaultZoom={12}
-          gestureHandling="greedy"
-          reuseMaps={true}
-        >
-          <AdvancedMarker ref={markerRef}>
-            <Pin />
-          </AdvancedMarker>
-          <AdvancedMarker ref={secondMarkerRef}>
-            <Pin />
-          </AdvancedMarker>
-          <Direction
-            origin={{
-              lat: pickup?.geometry.location.lat(),
-              lng: pickup?.geometry.location.lng(),
-            }}
-            dest={{
-              lat: dropoff?.geometry.location.lat(),
-              lng: dropoff?.geometry.location.lng(),
-            }}
-          />
-        </Map>
-        <MapHandler place={pickup} marker={marker} />
-        <MapHandler place={dropoff} marker={secondMarker} />
-      </div>
-    </APIProvider>
+    <>
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
+        <div className="map-container">
+          <Map
+            mapId={import.meta.env.VITE_MAPS_ID}
+            defaultCenter={center}
+            defaultZoom={11}
+            gestureHandling="greedy"
+            reuseMaps={true}
+            disableDefaultUI={true}
+          >
+            {open && (
+              <>
+                <AdvancedMarker ref={markerRef}>
+                  <Pin />
+                </AdvancedMarker>
+                <AdvancedMarker ref={secondMarkerRef}>
+                  <Pin />
+                </AdvancedMarker>
+              </>
+            )}
+            <Direction
+              origin={{
+                lat: pickup?.geometry.location.lat(),
+                lng: pickup?.geometry.location.lng(),
+              }}
+              dest={{
+                lat: dropoff?.geometry.location.lat(),
+                lng: dropoff?.geometry.location.lng(),
+              }}
+            />
+          </Map>
+          <MapHandler place={pickup} marker={marker} />
+          <MapHandler place={dropoff} marker={secondMarker} />
+        </div>
+      </APIProvider>
+    </>
   );
 }
 

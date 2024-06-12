@@ -1,7 +1,7 @@
-import React from "react";
+import { createPortal } from "react-dom";
 
 function Modal({ children, onClose, title, width }) {
-  return (
+  return createPortal(
     <>
       <div className="fixed inset-0 z-30 opacity-50 bg-gray-500"></div>
       <div onMouseDown={onClose} className="fixed inset-0 z-40">
@@ -15,7 +15,8 @@ function Modal({ children, onClose, title, width }) {
           </div>
         </div>
       </div>
-    </>
+    </>,
+    document.getElementById("modal")
   );
 }
 

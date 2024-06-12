@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Counter from "../Counter";
+import useReserveContext from "../../hooks/useReserveContext";
 
 const INIT_NUMBER = {
   adults: 0,
@@ -8,7 +9,8 @@ const INIT_NUMBER = {
 };
 
 function CounterPart() {
-  const [number, setNumber] = useState(INIT_NUMBER);
+  const { number, setNumber } = useReserveContext();
+
   const handleOnPlus = (e) =>
     setNumber((prev) => ({
       ...prev,

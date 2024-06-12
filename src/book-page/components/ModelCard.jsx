@@ -9,17 +9,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function ModelCard({ src, carImg, openDetails, id }) {
-
   return (
-    <div className="w-1/2 h-60">
-      <img
-        className="bg-center bg-contain bg-no-repeat h-full w-full"
-        src={src}
-      />
-      <div className="grid grid-cols-3 gap-2">
+    <div className="">
+      <img className="object-cover bg-no-repeat max-w-[28rem] " src={src} />
+      {/* <div className="grid grid-cols-3 gap-2">
         {openDetails[id] &&
           carImg?.map((item) => <CarImageCard src={item.imagePath} />)}
-      </div>
+      </div> */}
     </div>
   );
 }

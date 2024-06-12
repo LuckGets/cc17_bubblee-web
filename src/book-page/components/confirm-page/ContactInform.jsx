@@ -5,15 +5,12 @@ import Button from "../Button";
 
 function ContactInform({ error, guestInfo, setGuestInfo, handleSubmit }) {
   return (
-    <div>
+    <div className="p-3 border-2 border-black rounded-lg">
       <h1 className="text-3xl">Contact Information</h1>
       <p className="text-gray-400">
         Please give us some information to know you!
       </p>
-      <form
-        onSubmit={handleSubmit}
-        className="p-4 flex flex-col gap-5 border-2 border-black"
-      >
+      <form onSubmit={handleSubmit} className="p-4 flex flex-col gap-5">
         <div className="flex gap-3">
           <p>Name :</p>
           <Input

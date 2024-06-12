@@ -9,12 +9,12 @@ import { useState } from "react";
 import { guestSchema } from "../../validation/joi-schema/joi";
 import validator from "../../validation/validator";
 import userApi from "../../axios/user";
+import useReserveContext from "../hooks/useReserveContext";
 
-const INIT_GUEST = {
-  name: "",
-  email: "",
-  phone: "",
-};
+import { APIProvider } from "@vis.gl/react-google-maps";
+import MapRenderer from "../google-maps/Map";
+import { useEffect } from "react";
+import carsApi from "../../axios/cars";
 
 const INIT_ERROR = {
   name: "",
@@ -25,9 +25,35 @@ const INIT_ERROR = {
 function ConfirmModelPage() {
   const { authenUser } = useAuthenContext();
 
-  const [guestInfo, setGuestInfo] = useState(INIT_GUEST);
   const [errorGuest, setErrorGuest] = useState(INIT_ERROR);
   const [authenGuest, setAuthenGuest] = useState(false);
+  const [carDetail, setCarDetail] = useState(null);
+
+  const {
+    pickupLo,
+    dropOffLo,
+    pickupPlace,
+    dropOffPlace,
+    passengerNum,
+    bagNum,
+    modelId,
+    pickUpTime,
+    guestInfo,
+    setGuestInfo,
+  } = useReserveContext();
+
+  useEffect(() => {
+    const fetchCarData = async () => {
+      try {
+        const { data } = await carsApi.getMainImageByCarId(+modelId);
+        console.log(data);
+        setCarDetail(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCarData();
+  }, []);
 
   const handleChangeInput = (e) =>
     setGuestInfo({ ...guestInfo, [e.target.name]: e.target.value });
@@ -60,7 +86,7 @@ function ConfirmModelPage() {
           });
         }
       }
-      console.log("hello")
+      console.log("hello");
       setAuthenGuest(true);
     } catch (err) {
       console.log(err);
@@ -70,57 +96,68 @@ function ConfirmModelPage() {
   const handleEditInfo = () => setAuthenGuest(false);
 
   return (
-    <div className="p-10 flex justify-between gap-10">
-      <div className="w-full flex flex-col justify-between">
-        {authenUser ? (
-          <CustomerInform handleEditInfo={handleEditInfo} />
-        ) : authenGuest ? (
-          <CustomerInform
-            handleEditInfo={handleEditInfo}
-            guestInfo={guestInfo}
-          />
-        ) : (
-          <ContactInform
-            error={errorGuest}
-            handleSubmit={handleSubmitGuest}
-            guestInfo={guestInfo}
-            setGuestInfo={handleChangeInput}
-            authenGuest={authenGuest}
-          />
-        )}
-        <div className="border-2 border-black">
-          <h1 className="text-3xl">Model : ALL NEW</h1>
-          <div className="flex justify-between w-3/4">
-            <p>From : </p>
-            <p>To :</p>
-          </div>
-          <div className="flex justify-between w-3/4">
-            <p>Passengers : </p>
-            <p>Number of bags :</p>
-          </div>
-          <div className="flex justify-between w-3/4">
-            <p>From : </p>
-            <p>To :</p>
-          </div>
-          <div className="flex justify-between w-3/4">
-            <p>From : </p>
-            <p>To :</p>
+    <div className="p-10">
+      <div className="flex justify-between gap-10">
+        <div className="w-full flex flex-col justify-between gap-5">
+          {authenUser ? (
+            <CustomerInform handleEditInfo={handleEditInfo} />
+          ) : authenGuest ? (
+            <CustomerInform
+              handleEditInfo={handleEditInfo}
+              guestInfo={guestInfo}
+            />
+          ) : (
+            <ContactInform
+              error={errorGuest}
+              handleSubmit={handleSubmitGuest}
+              guestInfo={guestInfo}
+              setGuestInfo={handleChangeInput}
+              authenGuest={authenGuest}
+            />
+          )}
+          <div className="h-full border-2 border-black">
+            <h1 className="text-3xl">
+              Model : {carDetail?.carModel.carModel.split("_").join(" ")}
+            </h1>
+            <div className="flex justify-between w-3/4">
+              <p>From : {pickupPlace}</p>
+              <p>To : {dropOffPlace}</p>
+            </div>
+            <div className="flex justify-between w-3/4">
+              <p>Passengers : {passengerNum}</p>
+              <p>Number of bags : {bagNum}</p>
+            </div>
+            <div className="flex justify-between w-3/4">
+              <p>{carDetail?.carModel.costPerKM} THB/KM </p>
+              <p>Total price :</p>
+            </div>
+            <div className="flex justify-between w-3/4">
+              <p>Pick-up date : {pickUpTime?.split("T")[0]}</p>
+              <p>Pick-up time : {pickUpTime?.split("T")[1]}</p>
+            </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <div className="flex gap-5">
-            <Button to="/book" bg="white">
-              Back
-            </Button>
-            <Button to="/">Cancel</Button>
+        <div className="w-full">
+          <div className="w-full border-2 border-black mb-2">
+            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
+              <MapRenderer pickup={pickupLo} dropoff={dropOffLo} />
+            </APIProvider>
           </div>
-          <Button to="/book/payment" text="white" bg="black">
-            Continue
-          </Button>
+          <div className="min-w-[28rem]">
+            <img src={carDetail?.imagePath} />
+          </div>
         </div>
       </div>
-      <div className="w-full border-2 border-black">
-        {/* <ModelCard /> */}
+      <div className="flex justify-between">
+        <div className="flex gap-5">
+          <Button to="/book" bg="white">
+            Back
+          </Button>
+          <Button to="/">Cancel</Button>
+        </div>
+        <Button to="/book/payment" text="white" bg="black">
+          Continue
+        </Button>
       </div>
     </div>
   );

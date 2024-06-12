@@ -25,15 +25,12 @@ const PlaceAutoComplete = ({ onPlaceSelect, title }) => {
   }, [onPlaceSelect, placeAutoComplete]);
 
   return (
-    <div className="gap-2">
-      <h1 className="text-lg">{title}</h1>
-      <div>
-        <input
-          className="w-full h-[2rem] py-[12px] text-xl"
-          ref={inputRef}
-          type="text"
-        />
-      </div>
+    <div className="width-[4rem] gap-2">
+      <input
+        className="border-2 border-black w-full h-[2rem] py-[12px] text-xl"
+        ref={inputRef}
+        type="text"
+      />
     </div>
   );
 };
