@@ -48,6 +48,7 @@ function ConfirmModelPage() {
     guestInfo,
     setGuestInfo,
     distance,
+    setTempOrderId,
   } = useReserveContext();
 
   useEffect(() => {
@@ -139,10 +140,9 @@ function ConfirmModelPage() {
       data.modelId = carDetail.modelId;
 
       const order = await reserveApi.createReserveOrder(data);
-      if (order.status === 201) {
-        alert("Order booked! Please proceed to transaction process.");
-      }
+      alert("Order booked! Please proceed to transaction process.");
       console.log(order);
+      setTempOrderId(order.data.id);
       navigate("/book/payment");
     } catch (err) {
       console.log(err);
@@ -169,12 +169,12 @@ function ConfirmModelPage() {
               authenGuest={authenGuest}
             />
           )}
-          <CarDetails />
+          <CarDetails title="medium" />
         </div>
         <div className="w-full">
           <div className="w-full border-2 border-black mb-2">
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-              <div className="map-container">
+              <div className="h-full">
                 {/* <Map
                   mapId={import.meta.env.VITE_MAPS_ID}
                   defaultCenter={{ lat: 13.746389, lng: 100.535004 }}

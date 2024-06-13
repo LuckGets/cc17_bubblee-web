@@ -8,6 +8,9 @@ import PaymentPage from "../book-page/pages/PaymentPage";
 import ConfirmModelPage from "../book-page/pages/ConfirmModelPage";
 import SuccessPage from "../book-page/pages/SuccessPage";
 import ReserveWrapper from "../reservation-page/ReserveWrapper";
+import ReserveHistory from "../reservation-page/ReserveHistory";
+import ProtectedRoute from "../authentication/protected-route/ProtectedRoute";
+import AdminWrapper from "../admin-page/AdminWrapper";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const MainWrapper = lazy(() => import("../layouts/MainWrapper"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
@@ -63,7 +66,19 @@ const router = createBrowserRouter([
             path: "/reserve",
             element: <ReserveWrapper />,
           },
+          {
+            path: "/reserve/history",
+            element: (
+              <ProtectedRoute>
+                <ReserveHistory />
+              </ProtectedRoute>
+            ),
+          },
         ],
+      },
+      {
+        path: "/admin",
+        element: <AdminWrapper />,
       },
     ],
   },

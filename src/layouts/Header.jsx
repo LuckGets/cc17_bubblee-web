@@ -23,9 +23,9 @@ function Header() {
         <div className="px-5 text-white">
           <p className="">About us</p>
         </div>
-        <div className="px-5 text-white">
-          <p>Services</p>
-        </div>
+        <Link to="/reserve" className="px-5 text-white">
+          <p>Reservation</p>
+        </Link>
         <Link to="/book" className="px-5 text-white">
           <p>Booking</p>
         </Link>
@@ -35,7 +35,7 @@ function Header() {
       </div>
       {authenUser ? (
         <div className="flex text-white mr-16 px-10">
-          <AuthenHeader user={authenUser.name}/>
+          <AuthenHeader user={authenUser.name} />
           <div className="border-l-white border-l-2 pl-2 w-8 flex items-center">
             <PhoneHeaderIcon />
           </div>
@@ -50,7 +50,7 @@ function Header() {
       )}
       {openModal && (
         <Modal width={60} onClose={() => setOpenModal(false)}>
-          <LoginForm closeModal={() => setOpenModal(false)}/>
+          <LoginForm closeModal={() => setOpenModal(false)} />
         </Modal>
       )}
     </div>

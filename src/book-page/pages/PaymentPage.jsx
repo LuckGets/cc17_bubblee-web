@@ -45,7 +45,7 @@ function PaymentPage() {
       data.dropOffPlace = dropOffPlace;
       data.modelId = +modelId;
       const response = await transactionAPi.createTransactionOrder(data);
-      setTempOrderId(response.data);
+      console.log(response);
       alert("Transaction completed. Booking success!");
       navigate("/book/success");
     } catch (err) {

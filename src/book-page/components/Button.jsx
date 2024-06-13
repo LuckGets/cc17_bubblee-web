@@ -6,6 +6,7 @@ const bgMap = {
   black: "bg-black",
   primary: "bg-bubblee-orange",
   green: "bg-bubblee-old-green",
+  red: "bg-red-500",
 };
 
 const colorMap = {
