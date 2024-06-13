@@ -14,8 +14,10 @@ function ModelDetails({ id, details, isTextShow }) {
             {details.costPerKM} THB/KM
           </h2>
         </div>
-        {isTextShow[id] && (
+        {isTextShow[id] ? (
           <p className="text-bubblee-orange">Click to see more details...</p>
+        ) : (
+          <p className="text-white">spacer</p>
         )}
       </div>
     </div>

@@ -16,7 +16,6 @@ import MapHandler from "./MapHandler";
 import Direction from "./Direction";
 
 function MapRenderer({ pickup, dropoff }) {
-  const center = { lat: 13.746389, lng: 100.535004 };
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [secondMarkerRef, secondMarker] = useAdvancedMarkerRef();
   const [open, setOpen] = useState(true);
@@ -31,7 +30,7 @@ function MapRenderer({ pickup, dropoff }) {
         <div className="map-container">
           <Map
             mapId={import.meta.env.VITE_MAPS_ID}
-            defaultCenter={center}
+            defaultCenter={{ lat: 13.746389, lng: 100.535004 }}
             defaultZoom={11}
             gestureHandling="greedy"
             reuseMaps={true}

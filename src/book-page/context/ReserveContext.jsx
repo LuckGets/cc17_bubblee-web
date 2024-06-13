@@ -33,11 +33,12 @@ function ReserveContextProvider({ children }) {
 
   const [guestInfo, setGuestInfo] = useState(INIT_GUEST);
 
-  const [totalCost, setTotalCost] = useState(null);
   const [distance, setDistance] = useState(null);
 
   const [passengerNum, setPassengerNum] = useState(0);
   const [bagNum, setBagNum] = useState(0);
+
+  const [tempOrderId, setTempOrderId] = useState(null);
 
   const [pickUpTime, setPickUpTime] = useState(null);
 
@@ -66,6 +67,10 @@ function ReserveContextProvider({ children }) {
     modelId,
     guestInfo,
     setGuestInfo,
+    distance,
+    setDistance,
+    tempOrderId,
+    setTempOrderId,
   };
 
   return (

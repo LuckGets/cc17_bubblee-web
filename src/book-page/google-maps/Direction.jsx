@@ -1,11 +1,14 @@
 import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { useState, useEffect } from "react";
+import useReserveContext from "../hooks/useReserveContext";
 
 const Direction = ({ origin, dest }) => {
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const [directionService, setDirectionService] = useState(null);
   const [directionRenderer, setDirectionRenderer] = useState(null);
+
+  const { distance, setDistance } = useReserveContext();
 
   const [route, setRoute] = useState([]);
 
@@ -28,7 +31,7 @@ const Direction = ({ origin, dest }) => {
         directionRenderer.setDirections(response);
         setRoute(response.routes);
       });
-    console.log(route);
+    setDistance(route[0]?.legs[0].distance.text);
   }, [directionRenderer, directionService, origin, dest]);
 
   return null;

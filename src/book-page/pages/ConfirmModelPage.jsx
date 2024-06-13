@@ -11,10 +11,13 @@ import validator from "../../validation/validator";
 import userApi from "../../axios/user";
 import useReserveContext from "../hooks/useReserveContext";
 
-import { APIProvider } from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import MapRenderer from "../google-maps/Map";
 import { useEffect } from "react";
 import carsApi from "../../axios/cars";
+import reserveApi from "../../axios/reserve";
+import { useNavigate } from "react-router-dom";
+import CarDetails from "../components/CarDetails";
 
 const INIT_ERROR = {
   name: "",
@@ -29,10 +32,14 @@ function ConfirmModelPage() {
   const [authenGuest, setAuthenGuest] = useState(false);
   const [carDetail, setCarDetail] = useState(null);
 
+  const navigate = useNavigate();
+
   const {
     pickupLo,
     dropOffLo,
     pickupPlace,
+    pickUpLatLng,
+    dropOffLatLng,
     dropOffPlace,
     passengerNum,
     bagNum,
@@ -40,13 +47,13 @@ function ConfirmModelPage() {
     pickUpTime,
     guestInfo,
     setGuestInfo,
+    distance,
   } = useReserveContext();
 
   useEffect(() => {
     const fetchCarData = async () => {
       try {
         const { data } = await carsApi.getMainImageByCarId(+modelId);
-        console.log(data);
         setCarDetail(data);
       } catch (err) {
         console.log(err);
@@ -86,7 +93,6 @@ function ConfirmModelPage() {
           });
         }
       }
-      console.log("hello");
       setAuthenGuest(true);
     } catch (err) {
       console.log(err);
@@ -94,6 +100,54 @@ function ConfirmModelPage() {
   };
 
   const handleEditInfo = () => setAuthenGuest(false);
+
+  const handleOnSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      if (
+        !authenUser &&
+        !(guestInfo.name && guestInfo.email && guestInfo.phone)
+      ) {
+        return console.log("Please give us your contact information");
+      }
+
+      const data = {};
+
+      if (guestInfo.name && guestInfo.email && guestInfo.phone) {
+        data.guestName = guestInfo.name;
+        data.guestMail = guestInfo.email;
+        data.guestPhone = guestInfo.phone;
+      }
+
+      if (authenUser) {
+        data.userId = authenUser.id;
+      }
+
+      data.pickupPlace = pickupPlace;
+      data.dropOffPlace = dropOffPlace;
+      data.pickUpLatLng = pickUpLatLng;
+      data.dropOffLatLng = dropOffLatLng;
+      data.distance = distance;
+      data.totalCost =
+        Math.round(
+          (+carDetail?.carModel.costPerKM * +distance?.split(" ")[0]) / 10
+        ) * 10;
+      data.passengerNum = passengerNum;
+      data.bagNumber = bagNum;
+      data.pickUpTime = new Date(pickUpTime);
+
+      data.modelId = carDetail.modelId;
+
+      const order = await reserveApi.createReserveOrder(data);
+      if (order.status === 201) {
+        alert("Order booked! Please proceed to transaction process.");
+      }
+      console.log(order);
+      navigate("/book/payment");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="p-10">
@@ -115,32 +169,22 @@ function ConfirmModelPage() {
               authenGuest={authenGuest}
             />
           )}
-          <div className="h-full border-2 border-black">
-            <h1 className="text-3xl">
-              Model : {carDetail?.carModel.carModel.split("_").join(" ")}
-            </h1>
-            <div className="flex justify-between w-3/4">
-              <p>From : {pickupPlace}</p>
-              <p>To : {dropOffPlace}</p>
-            </div>
-            <div className="flex justify-between w-3/4">
-              <p>Passengers : {passengerNum}</p>
-              <p>Number of bags : {bagNum}</p>
-            </div>
-            <div className="flex justify-between w-3/4">
-              <p>{carDetail?.carModel.costPerKM} THB/KM </p>
-              <p>Total price :</p>
-            </div>
-            <div className="flex justify-between w-3/4">
-              <p>Pick-up date : {pickUpTime?.split("T")[0]}</p>
-              <p>Pick-up time : {pickUpTime?.split("T")[1]}</p>
-            </div>
-          </div>
+          <CarDetails />
         </div>
         <div className="w-full">
           <div className="w-full border-2 border-black mb-2">
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-              <MapRenderer pickup={pickupLo} dropoff={dropOffLo} />
+              <div className="map-container">
+                {/* <Map
+                  mapId={import.meta.env.VITE_MAPS_ID}
+                  defaultCenter={{ lat: 13.746389, lng: 100.535004 }}
+                  defaultZoom={11}
+                  gestureHandling="greedy"
+                  reuseMaps={true}
+                  disableDefaultUI={true}
+                ></Map> */}
+                FAKE GOOGLE MAP
+              </div>
             </APIProvider>
           </div>
           <div className="min-w-[28rem]">
@@ -155,8 +199,8 @@ function ConfirmModelPage() {
           </Button>
           <Button to="/">Cancel</Button>
         </div>
-        <Button to="/book/payment" text="white" bg="black">
-          Continue
+        <Button onClick={handleOnSubmit} text="white" bg="black">
+          Confirm Booking
         </Button>
       </div>
     </div>

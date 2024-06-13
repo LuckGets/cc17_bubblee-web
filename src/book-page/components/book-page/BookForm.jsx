@@ -3,7 +3,6 @@ import { useState } from "react";
 import useReserveContext from "../../hooks/useReserveContext";
 import InputTime from "./InputTime";
 import CounterPart from "./CounterPart";
-import PlaceInput from "./PlaceInput";
 import MapRenderer from "../../google-maps/Map";
 import PlaceAutoComplete from "../../google-maps/PlaceAutoComplete";
 import { APIProvider } from "@vis.gl/react-google-maps";
