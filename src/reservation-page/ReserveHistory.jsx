@@ -8,41 +8,24 @@ import BookDetails from "./components/BookDetails";
 import Button from "../book-page/components/Button";
 
 function ReserveHistory() {
-  const { authenUser } = useAuthenContext();
-  const [orderHistory, setOrderHistory] = useState(null);
-
-  const fetchOrderHistory = async () => {
-    try {
-      const { data } = await reserveApi.findReserveHistoryByUserId();
-      setOrderHistory(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    fetchOrderHistory();
-  }, []);
-
-  const handleOnEdit = (e) => {
-    e.preventDefault();
-  };
+  const { userHistory } = useAuthenContext();
 
   return (
     <div className="p-5">
       <h1 className="text-3xl">Reservation History</h1>
-      {orderHistory ? (
-        orderHistory?.map((item) => (
-          <BookDetails
-            handleEdit={handleOnEdit}
-            hoverAble={false}
-            detail={item}
-          />
+      {userHistory[0] ? (
+        userHistory?.map((item) => (
+          <BookDetails hoverAble={false} detail={item} />
         ))
       ) : (
-        <div>
-          <h1>Looks Like You never booked the trip with us.</h1>
-          <p>Start a new Trip?</p>
-          <Button to="/book"></Button>
+        <div className="flex flex-col mt-5 gap-5">
+          <h1 className="text-3xl">
+            Looks Like You have never booked the trip with us yet.
+          </h1>
+          <p className="text-2xl">Start a new Trip?</p>
+          <Button text="white" bg="primary" to="/book">
+            BOOK
+          </Button>
         </div>
       )}
     </div>

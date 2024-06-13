@@ -1,7 +1,9 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import reserveApi from "../../axios/reserve";
 
 export const ReserveContext = createContext();
 
@@ -41,6 +43,29 @@ function ReserveContextProvider({ children }) {
   const [tempOrderId, setTempOrderId] = useState(null);
 
   const [pickUpTime, setPickUpTime] = useState(null);
+  const [isRoundTrip, setIsRoundTrip] = useState(null);
+
+  const fetchOrderDetail = async () => {
+    try {
+      if (!tempOrderId) return;
+      const { data } = await reserveApi.findReserveOrderDetails({
+        id: tempOrderId,
+      });
+      setTempOrderId(null);
+      console.log(data);
+
+      setNumber({ ...number, bags: data.bagNumber });
+      setPickUpTime(data.pickUpTime);
+      setIsRoundTrip(data.isRoundTrip);
+      setModelId(modelId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrderDetail();
+  }, [tempOrderId]);
 
   const sharedValue = {
     pickUpTime,
@@ -71,6 +96,8 @@ function ReserveContextProvider({ children }) {
     setDistance,
     tempOrderId,
     setTempOrderId,
+    isRoundTrip,
+    setIsRoundTrip,
   };
 
   return (

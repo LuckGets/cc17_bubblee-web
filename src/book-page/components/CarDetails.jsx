@@ -19,6 +19,7 @@ function CarDetails({ text, title }) {
     bagNum,
     distance,
     pickUpTime,
+    isRoundTrip,
   } = useReserveContext();
 
   const [carDetail, setCarDetail] = useState(null);
@@ -58,9 +59,17 @@ function CarDetails({ text, title }) {
         <p className={`${textMap[text]}`}>
           Total price :
           <span className="px-2 text-3xl">
-            {Math.round(
-              (+carDetail?.carModel.costPerKM * +distance?.split(" ")[0]) / 10
-            ) * 10}{" "}
+            {isRoundTrip
+              ? Math.round(
+                  (+carDetail?.carModel.costPerKM * +distance?.split(" ")[0]) /
+                    10
+                ) *
+                10 *
+                2
+              : Math.round(
+                  (+carDetail?.carModel.costPerKM * +distance?.split(" ")[0]) /
+                    10
+                ) * 10}
           </span>
           THB
         </p>

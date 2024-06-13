@@ -3,16 +3,15 @@ import Button from "../../book-page/components/Button";
 import Input from "../../components/Input";
 import useAuthenContext from "../../authentication/hooks/useAuthenContext";
 import userApi from "../../axios/user";
+import reserveApi from "../../axios/reserve";
 
 const INIT_INPUT = {
   password: "",
   confirmPassword: "",
 };
 
-function CancelForm({ onClose, orderId }) {
+function CancelForm({ onClose, orderId, setCloseModal }) {
   const [password, setPassword] = useState(INIT_INPUT);
-
-  const { authenUser } = useAuthenContext();
 
   const handleOnChange = (e) =>
     setPassword({ ...password, [e.target.name]: e.target.value });
@@ -33,10 +32,12 @@ function CancelForm({ onClose, orderId }) {
       const { data } = await userApi.ComparePassword({
         password: password.password,
       });
-      console.log(data);
       if (!data) {
         return console.log("Password is invalid.");
       }
+      await reserveApi.cancelOrder(orderId);
+      alert("Order cancel successfully!");
+      setCloseModal;
     } catch (err) {
       console.log(err);
     }
@@ -64,14 +65,14 @@ function CancelForm({ onClose, orderId }) {
           />
           <p className="text-[0.9rem] text-gray-700">Confirm Password :</p>
           <Input
-            name="password"
+            name="confirmPassword"
             onChange={handleOnChange}
-            value={password.password}
+            value={password.confirmPassword}
             placeholder="confirmyourpassword1234"
           />
         </div>
       </div>
-      <Button text="white" bg="red">
+      <Button onClick={handleOnDelete} text="white" bg="red">
         Cancel
       </Button>
     </div>

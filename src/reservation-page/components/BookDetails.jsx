@@ -7,18 +7,28 @@ import Button from "../../book-page/components/Button";
 import Modal from "../../components/Modal";
 import Input from "../../components/Input";
 import CancelForm from "./CancelForm";
+import useReserveContext from "../../book-page/hooks/useReserveContext";
+import { useNavigate } from "react-router-dom";
 
-function BookDetails({ detail, hoverAble = true, handleEdit }) {
+function BookDetails({ detail, hoverAble = true }) {
   const [isEditable, setIsEditAble] = useState(false);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+  const navigate = useNavigate();
 
   const { authenUser } = useAuthenContext();
+  const { setTempOrderId } = useReserveContext();
 
   const fetchUserIdByOrderId = async () => {
     const { data } = await reserveApi.findUserIdByOrderId(detail?.id);
     if (data.userId === authenUser.id) {
       setIsEditAble(true);
     }
+  };
+
+  const handleOnEdit = (e) => {
+    e.preventDefault();
+    setTempOrderId(detail?.id);
+    navigate("/book/main");
   };
 
   useEffect(() => {
@@ -75,7 +85,7 @@ function BookDetails({ detail, hoverAble = true, handleEdit }) {
         </div>
         {isEditable ? (
           <div className="flex w-full justify-end gap-10 p-5">
-            <Button onClick={handleEdit} text="white" bg="primary">
+            <Button onClick={handleOnEdit} text="white" bg="primary">
               Edit
             </Button>
             <Button
@@ -93,6 +103,7 @@ function BookDetails({ detail, hoverAble = true, handleEdit }) {
           <CancelForm
             orderId={detail?.id}
             onClose={() => setConfirmDeleteModal(false)}
+            setCloseModal={setConfirmDeleteModal(false)}
           />
         </Modal>
       )}

@@ -12,12 +12,12 @@ function BookForm() {
   const { pickupLo, setPickUpLo, dropOffLo, setDropOffLo } =
     useReserveContext();
 
-  useEffect(() => {
-    if ((pickupLo, dropOffLo)) {
-      setPickUpLo(null);
-      setDropOffLo(null);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if ((pickupLo, dropOffLo)) {
+  //     setPickUpLo(null);
+  //     setDropOffLo(null);
+  //   }
+  // }, []);
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>

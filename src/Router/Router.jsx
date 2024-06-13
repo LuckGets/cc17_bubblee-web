@@ -11,6 +11,9 @@ import ReserveWrapper from "../reservation-page/ReserveWrapper";
 import ReserveHistory from "../reservation-page/ReserveHistory";
 import ProtectedRoute from "../authentication/protected-route/ProtectedRoute";
 import AdminWrapper from "../admin-page/AdminWrapper";
+import AdminRoute from "../admin-page/AdminRoute";
+import AdminLandingPage from "../admin-page/components/AdminLandingPage";
+import OrderWrapper from "../admin-page/layout/OrderWrapper";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const MainWrapper = lazy(() => import("../layouts/MainWrapper"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
@@ -22,7 +25,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: (
+          <AdminRoute>
+            <HomePage />
+          </AdminRoute>
+        ),
       },
       {
         path: "/signup",
@@ -76,9 +83,19 @@ const router = createBrowserRouter([
           },
         ],
       },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminWrapper />,
+    children: [
       {
         path: "/admin",
-        element: <AdminWrapper />,
+        element: <AdminLandingPage />,
+      },
+      {
+        path: "/admin/reservation",
+        element: <OrderWrapper />,
       },
     ],
   },

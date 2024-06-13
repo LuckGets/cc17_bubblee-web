@@ -3,7 +3,7 @@ import placeholderImage from "../../assets/images/placeholderimage.png";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 
-function Card({title, content}) {
+function Card({ title, content, onClick }) {
   return (
     <div className="w-[25rem] gap-5 flex flex-col p-10 border-black border-4">
       <div className="flex justify-center">
@@ -13,11 +13,15 @@ function Card({title, content}) {
         <h1 className="text-4xl">{title}</h1>
       </div>
       <div>
-        <p>
-          {content}
-        </p>
+        <p>{content}</p>
       </div>
-      <Link to="/book/main" className=" flex justify-center bg-bubblee-light-green py-2 rounded-xl">Select</Link>
+      <Link
+        onClick={onClick}
+        to="/book/main"
+        className=" flex justify-center bg-bubblee-light-green py-2 rounded-xl"
+      >
+        Select
+      </Link>
     </div>
   );
 }

@@ -49,6 +49,7 @@ function ConfirmModelPage() {
     setGuestInfo,
     distance,
     setTempOrderId,
+    isRoundTrip,
   } = useReserveContext();
 
   useEffect(() => {
@@ -113,7 +114,10 @@ function ConfirmModelPage() {
       }
 
       const data = {};
-
+      const cost =
+        Math.round(
+          (+carDetail?.carModel.costPerKM * +distance?.split(" ")[0]) / 10
+        ) * 10;
       if (guestInfo.name && guestInfo.email && guestInfo.phone) {
         data.guestName = guestInfo.name;
         data.guestMail = guestInfo.email;
@@ -129,14 +133,12 @@ function ConfirmModelPage() {
       data.pickUpLatLng = pickUpLatLng;
       data.dropOffLatLng = dropOffLatLng;
       data.distance = distance;
-      data.totalCost =
-        Math.round(
-          (+carDetail?.carModel.costPerKM * +distance?.split(" ")[0]) / 10
-        ) * 10;
+      data.totalCost = isRoundTrip ? cost * 2 : cost;
       data.passengerNum = passengerNum;
       data.bagNumber = bagNum;
       data.pickUpTime = new Date(pickUpTime);
 
+      data.isRoundTrip = isRoundTrip;
       data.modelId = carDetail.modelId;
 
       const order = await reserveApi.createReserveOrder(data);

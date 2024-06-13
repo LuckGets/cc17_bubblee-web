@@ -15,4 +15,9 @@ reserveApi.findReserveHistoryByUserId = () => axios.get("/reserve/history");
 reserveApi.findUserIdByOrderId = (orderId) =>
   axios.get(`/reserve/user/${orderId}`);
 
+reserveApi.cancelOrder = (orderId) =>
+  axios.delete(`/reserve/history/${orderId}`);
+
+reserveApi.getAllUnReservedOrder = () => axios.get("/reserve/history/all");
+
 export default reserveApi;

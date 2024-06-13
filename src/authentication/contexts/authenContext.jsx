@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import authenApi from "../../axios/authen";
+import reserveApi from "../../axios/reserve";
 import {
   getAccessToken,
   removeAccessToken,
@@ -15,6 +16,7 @@ export const AuthenContext = createContext();
 export default function AuthenContextProvider({ children }) {
   // set authenticate user state
   const [authenUser, setAuthenUser] = useState(null);
+  const [userHistory, setUserHistory] = useState(null);
 
   const fetchUserData = async () => {
     try {
@@ -26,8 +28,19 @@ export default function AuthenContextProvider({ children }) {
       console.log(err);
     }
   };
+
+  const fetchOrderHistory = async () => {
+    try {
+      const { data } = await reserveApi.findReserveHistoryByUserId();
+      setUserHistory(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchUserData();
+    fetchOrderHistory();
   }, []);
 
   // Login Fn
@@ -40,7 +53,7 @@ export default function AuthenContextProvider({ children }) {
     } catch (err) {
       console.log(err);
       if (err instanceof AxiosError) {
-        alert(err.response.data.message)
+        alert(err.response.data.message);
         const message =
           response.statusCode === 400
             ? "Login unsuccess. please try again"
@@ -58,7 +71,9 @@ export default function AuthenContextProvider({ children }) {
   };
 
   return (
-    <AuthenContext.Provider value={{ authenUser, userLogin, userLogout }}>
+    <AuthenContext.Provider
+      value={{ authenUser, userHistory, userLogin, userLogout }}
+    >
       {children}
     </AuthenContext.Provider>
   );
