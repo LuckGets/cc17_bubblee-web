@@ -16,7 +16,6 @@ export const AuthenContext = createContext();
 export default function AuthenContextProvider({ children }) {
   // set authenticate user state
   const [authenUser, setAuthenUser] = useState(null);
-  const [userHistory, setUserHistory] = useState(null);
 
   const fetchUserData = async () => {
     try {
@@ -29,18 +28,8 @@ export default function AuthenContextProvider({ children }) {
     }
   };
 
-  const fetchOrderHistory = async () => {
-    try {
-      const { data } = await reserveApi.findReserveHistoryByUserId();
-      setUserHistory(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     fetchUserData();
-    fetchOrderHistory();
   }, []);
 
   // Login Fn
@@ -72,7 +61,7 @@ export default function AuthenContextProvider({ children }) {
 
   return (
     <AuthenContext.Provider
-      value={{ authenUser, userHistory, userLogin, userLogout }}
+      value={{ authenUser, userLogin, userLogout, setAuthenUser }}
     >
       {children}
     </AuthenContext.Provider>

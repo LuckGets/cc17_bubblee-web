@@ -8,6 +8,10 @@ import PlaceAutoComplete from "../../google-maps/PlaceAutoComplete";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { useEffect } from "react";
 
+const nowDate = Date.now() + 86400000;
+const date = new Date(nowDate);
+const dateString = date.toISOString().split(".")[0].slice(0, 16);
+
 function BookForm() {
   const { pickupLo, setPickUpLo, dropOffLo, setDropOffLo } =
     useReserveContext();
@@ -23,7 +27,7 @@ function BookForm() {
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
       <div className="flex gap-5">
         <div className="flex flex-col">
-          <InputTime />
+          <InputTime min={dateString} />
           <div className="p-5 my-5 bg-gray-200 w-3/4">
             <h1 className="text-lg">Pick up :</h1>
             <PlaceAutoComplete onPlaceSelect={setPickUpLo} />

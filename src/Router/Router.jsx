@@ -14,6 +14,7 @@ import AdminWrapper from "../admin-page/AdminWrapper";
 import AdminRoute from "../admin-page/AdminRoute";
 import AdminLandingPage from "../admin-page/components/AdminLandingPage";
 import OrderWrapper from "../admin-page/layout/OrderWrapper";
+import NavigatePolice from "../authentication/NavigatePolice";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const MainWrapper = lazy(() => import("../layouts/MainWrapper"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
@@ -21,15 +22,15 @@ const SignupPage = lazy(() => import("../pages/SignupPage"));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainWrapper />,
+    element: (
+      <NavigatePolice>
+        <MainWrapper />
+      </NavigatePolice>
+    ),
     children: [
       {
         path: "/",
-        element: (
-          <AdminRoute>
-            <HomePage />
-          </AdminRoute>
-        ),
+        element: <HomePage />,
       },
       {
         path: "/signup",
@@ -87,7 +88,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminWrapper />,
+    element: (
+      <AdminRoute>
+        <AdminWrapper />
+      </AdminRoute>
+    ),
     children: [
       {
         path: "/admin",

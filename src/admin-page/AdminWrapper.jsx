@@ -4,13 +4,11 @@ import useAuthenContext from "../authentication/hooks/useAuthenContext";
 import { Outlet } from "react-router-dom";
 
 function AdminWrapper() {
-  const { authenUser } = useAuthenContext();
-
   return (
-    <div className="min-h-screen">
+    <>
       <AdminHeader />
       <Outlet />
-    </div>
+    </>
   );
 }
 

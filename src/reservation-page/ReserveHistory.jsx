@@ -8,14 +8,31 @@ import BookDetails from "./components/BookDetails";
 import Button from "../book-page/components/Button";
 
 function ReserveHistory() {
-  const { userHistory } = useAuthenContext();
+  const { authenUser } = useAuthenContext();
+
+  const [userHistory, setUserHistory] = useState(null);
+
+  const fetchOrderHistory = async () => {
+    try {
+      if (!authenUser) return;
+      const { data } = await reserveApi.findReserveHistoryByUserId();
+      setUserHistory(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (userHistory) return;
+    fetchOrderHistory();
+  });
 
   return (
     <div className="p-5">
       <h1 className="text-3xl">Reservation History</h1>
-      {userHistory[0] ? (
+      {userHistory ? (
         userHistory?.map((item) => (
-          <BookDetails hoverAble={false} detail={item} />
+          <BookDetails key={item.id} hoverAble={false} detail={item} />
         ))
       ) : (
         <div className="flex flex-col mt-5 gap-5">

@@ -14,11 +14,6 @@ function OneWayOrRound() {
         title="One Way Trip"
         content={contentArr[0]}
       />
-      <Card
-        onClick={() => setIsRoundTrip(true)}
-        title="Round Trip"
-        content={contentArr[1]}
-      />
       <button></button>
     </div>
   );

@@ -67,10 +67,6 @@ function BookMainPage() {
 
     setBagNum(number.bags);
 
-    // if (!pickUpLatLng || !dropOffLatLng) {
-    //   console.log("latlng still not stored");
-    //   return;
-    // }
     navigate("/book/model");
   };
 

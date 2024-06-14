@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createContext } from "react";
 import carsApi from "../../axios/cars";
 import { useEffect } from "react";
+import useReserveContext from "../hooks/useReserveContext";
 
 export const BookPageContext = createContext();
 
@@ -9,19 +10,10 @@ export default function BookPageContextProvider({ children }) {
   const [carImage, setCarImage] = useState([]);
   const [carDetails, setCarDetails] = useState([]);
 
-  const fetchCarImage = async () => {
-    const { data } = await carsApi.getCarImage();
-    setCarImage(data);
-    const response = await carsApi.getCarDetails();
-    setCarDetails(response.data)
-  }; 
-
-  useEffect(() => {
-    fetchCarImage();
-  }, []);
+  const { pickUpTime } = useReserveContext();
 
   return (
-    <BookPageContext.Provider value={{ fetchCarImage, carImage, carDetails }}>
+    <BookPageContext.Provider value={{ carImage, carDetails }}>
       {children}
     </BookPageContext.Provider>
   );

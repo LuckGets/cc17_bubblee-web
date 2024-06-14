@@ -9,6 +9,7 @@ import Input from "../../components/Input";
 import CancelForm from "./CancelForm";
 import useReserveContext from "../../book-page/hooks/useReserveContext";
 import { useNavigate } from "react-router-dom";
+import convertISOtoLocal from "../../utils/convertISOtoLocal";
 
 function BookDetails({ detail, hoverAble = true }) {
   const [isEditable, setIsEditAble] = useState(false);
@@ -35,6 +36,13 @@ function BookDetails({ detail, hoverAble = true }) {
     fetchUserIdByOrderId();
   }, []);
 
+  if (detail.pickUpTime && detail.reservedAt) {
+    const localPickUpTime = convertISOtoLocal(detail.pickUpTime);
+    const localReservedTime = convertISOtoLocal(detail.reservedAt);
+    detail.pickUpTime = localPickUpTime;
+    detail.reservedAt = localReservedTime;
+  }
+
   return (
     <div className="my-3">
       <h1 className="w-full p-3 text-3xl bg-gray-900 text-white rounded-t-lg">
@@ -51,10 +59,7 @@ function BookDetails({ detail, hoverAble = true }) {
           <div className="flex flex-col">
             <p>From : {detail?.pickupPlace}</p>
             <p>Passengers : {detail?.passengerNum}</p>
-            <p>
-              Date :{" "}
-              {detail?.pickUpTime.split("T")[0].split("-").reverse().join("/")}
-            </p>
+            <p>Date : {detail?.pickUpTime.split(",")[0]}</p>
             <p className="pt-5">
               <span className="text-3xl pr-5">{detail?.totalCost} THB</span>
               <span className="text-2xl">
@@ -63,24 +68,15 @@ function BookDetails({ detail, hoverAble = true }) {
             </p>
             <p className="text-gray-500 text-sm mt-3">
               Reserved At :
-              {`${detail?.reservedAt
-                .split("T")[0]
-                .split("-")
-                .reverse()
-                .join("/")} ${detail?.reservedAt.split("T")[1].split(".")[0]}`}
+              {`${detail?.reservedAt.split(",")[0]} ${
+                detail?.reservedAt.split(",")[1]
+              }`}
             </p>
           </div>
           <div className="flex flex-col">
             <p>To : {detail?.dropOffPlace}</p>
             <p>Number of Bags : {detail?.bagNumber}</p>
-            <p>
-              Pick-up Time :
-              {`${
-                detail?.pickUpTime.split("T")[1].split(".")[0].split(":")[0]
-              }:${
-                detail?.pickUpTime.split("T")[1].split(".")[0].split(":")[1]
-              }`}
-            </p>
+            <p>Pick-up Time :{`${detail?.pickUpTime.split(",")[1]}`}</p>
           </div>
         </div>
         {isEditable ? (

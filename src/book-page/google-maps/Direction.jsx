@@ -8,7 +8,8 @@ const Direction = ({ origin, dest }) => {
   const [directionService, setDirectionService] = useState(null);
   const [directionRenderer, setDirectionRenderer] = useState(null);
 
-  const { distance, setDistance } = useReserveContext();
+  const { setDistance, setDuration, setEstimatedFinishTime } =
+    useReserveContext();
 
   const [route, setRoute] = useState([]);
 
@@ -31,6 +32,7 @@ const Direction = ({ origin, dest }) => {
         directionRenderer.setDirections(response);
         setRoute(response.routes);
       });
+    setDuration(route[0]?.legs[0].duration.value * 1000);
     setDistance(route[0]?.legs[0].distance.text);
   }, [directionRenderer, directionService, origin, dest]);
 

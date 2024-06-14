@@ -48,7 +48,7 @@ function CarDetails({ text, title }) {
           {carDetail?.carModel.costPerKM} THB/KM{" "}
         </p>
         <p className={`${textMap[text]}`}>
-          Pick-up date :{" "}
+          Pick-up date :
           {pickUpTime?.split("T")[0].split("-").reverse().join("/")}
         </p>
       </div>
@@ -76,7 +76,7 @@ function CarDetails({ text, title }) {
         <p className={`${textMap[text]}`}>
           Pick-up time :{" "}
           {`${pickUpTime?.split("T")[1].split(".")[0].split(":")[0]}:${
-            pickUpTime.split("T")[1].split(".")[0].split(":")[1]
+            pickUpTime?.split("T")[1].split(".")[0].split(":")[1]
           }`}
         </p>
       </div>

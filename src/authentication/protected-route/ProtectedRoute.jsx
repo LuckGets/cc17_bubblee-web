@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import useAuthenContext from "../hooks/useAuthenContext";
 import { getAccessToken } from "../localStorage/localStroage";
+import userApi from "../../axios/user";
 
 function ProtectedRoute({ children }) {
   const { authenUser, setAuthenUser } = useAuthenContext();

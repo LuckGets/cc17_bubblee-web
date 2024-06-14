@@ -10,4 +10,9 @@ carsApi.getCarAllImage = (id) => axios.post("/cars/image", { modelId: id });
 carsApi.getMainImageByCarId = (id) =>
   axios.post("/cars/main-image", { id: id });
 
+carsApi.filteredCarByTime = (time) => axios.post("/cars/filter", time);
+
+carsApi.getFilteredCarMainImage = (modelId) =>
+  axios.post("/cars/filterimage", modelId);
+
 export default carsApi;

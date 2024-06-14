@@ -42,7 +42,8 @@ function ReserveContextProvider({ children }) {
 
   const [tempOrderId, setTempOrderId] = useState(null);
 
-  const [pickUpTime, setPickUpTime] = useState(null);
+  const [pickUpTime, setPickUpTime] = useState("");
+  const [duration, setDuration] = useState(null);
   const [isRoundTrip, setIsRoundTrip] = useState(null);
 
   const fetchOrderDetail = async () => {
@@ -98,6 +99,8 @@ function ReserveContextProvider({ children }) {
     setTempOrderId,
     isRoundTrip,
     setIsRoundTrip,
+    duration,
+    setDuration,
   };
 
   return (

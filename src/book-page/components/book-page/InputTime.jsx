@@ -1,7 +1,7 @@
 import React from "react";
 import useReserveContext from "../../hooks/useReserveContext";
 
-function InputTime() {
+function InputTime({ min }) {
   const { pickUpTime, setPickUpTime } = useReserveContext();
 
   return (
@@ -15,6 +15,7 @@ function InputTime() {
           <input
             className="border-2 border-gray-500 w-full"
             type="datetime-local"
+            min={min}
             value={pickUpTime}
             onChange={(e) => setPickUpTime(e.target.value)}
           />

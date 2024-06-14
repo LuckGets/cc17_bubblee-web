@@ -50,6 +50,7 @@ function ConfirmModelPage() {
     distance,
     setTempOrderId,
     isRoundTrip,
+    duration,
   } = useReserveContext();
 
   useEffect(() => {
@@ -113,6 +114,10 @@ function ConfirmModelPage() {
         return console.log("Please give us your contact information");
       }
 
+      const estimateDuration = duration * 3;
+      const estimateMilli = Date.parse(pickUpTime) + estimateDuration;
+      const estimateDate = new Date(estimateMilli);
+
       const data = {};
       const cost =
         Math.round(
@@ -133,11 +138,12 @@ function ConfirmModelPage() {
       data.pickUpLatLng = pickUpLatLng;
       data.dropOffLatLng = dropOffLatLng;
       data.distance = distance;
+      data.duration = duration / 1000;
       data.totalCost = isRoundTrip ? cost * 2 : cost;
       data.passengerNum = passengerNum;
       data.bagNumber = bagNum;
       data.pickUpTime = new Date(pickUpTime);
-
+      data.estimatedFinishTime = estimateDate;
       data.isRoundTrip = isRoundTrip;
       data.modelId = carDetail.modelId;
 

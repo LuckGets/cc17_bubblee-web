@@ -1,13 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuthenContext from "../../authentication/hooks/useAuthenContext";
+import { useNavigate } from "react-router-dom";
 
 function AdminHeader() {
+  const { userLogout } = useAuthenContext();
+
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    userLogout();
+    navigate("/");
+  };
+
   return (
     <div className="min-h-[8rem] flex justify-center items-center bg-bubblee-orange gap-32">
-      <Link to="/admin/reserve" className="text-2xl text-white">
+      <Link to="/admin/reservation" className="text-2xl text-white">
         Reservation
       </Link>
       <Link className="text-2xl text-white">Driver</Link>
+      <div>
+        <Link onClick={handleLogout} className="text-2xl text-white">
+          Logout
+        </Link>
+      </div>
     </div>
   );
 }
