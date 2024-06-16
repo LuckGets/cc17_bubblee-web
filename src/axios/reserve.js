@@ -20,4 +20,7 @@ reserveApi.cancelOrder = (orderId) =>
 
 reserveApi.getAllUnReservedOrder = () => axios.get("/reserve/history/all");
 
+reserveApi.assignDriverToOrder = (orderId, data) =>
+  axios.patch(`/reserve/assign/${orderId}`, data);
+
 export default reserveApi;

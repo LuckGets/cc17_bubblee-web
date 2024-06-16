@@ -5,11 +5,11 @@ import Footer from "./Footer";
 
 function MainWrapper() {
   return (
-    <>
+    <div className="overflow-hidden">
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -13,7 +13,7 @@ function Header() {
 
   const { authenUser } = useAuthenContext();
   return (
-    <div className="flex justify-between items-center w-full min-h-[4rem] bg-gray-600">
+    <div className="flex justify-between items-center w-full min-h-[4rem] bg-[#464646]">
       <div className="ml-16">
         <Link role="button" to="/" className="text-3xl text-white">
           Logo

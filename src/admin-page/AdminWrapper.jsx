@@ -7,7 +7,9 @@ function AdminWrapper() {
   return (
     <>
       <AdminHeader />
-      <Outlet />
+      <div className="flex justify-center bg-gray-200 p-10">
+        <Outlet />
+      </div>
     </>
   );
 }

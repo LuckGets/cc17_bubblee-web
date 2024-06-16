@@ -10,6 +10,7 @@ function OrderWrapper() {
   const fetchAllUnReservedOrder = async () => {
     try {
       const { data } = await reserveApi.getAllUnReservedOrder();
+      console.log(data);
       if (!data[0]) {
         alert("There is no any unreserved order in database");
       }
@@ -25,7 +26,7 @@ function OrderWrapper() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-8 w-5/6 bg-white p-20">
       {details?.map((item) => (
         <OrderCard key={item.orderId} details={item} />
       ))}

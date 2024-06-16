@@ -38,8 +38,7 @@ function ModelPage() {
   const fetchCarImage = async () => {
     try {
       if (!pickUpTime) return;
-      const pickupInMilli = Date.parse(pickUpTime);
-      const isoDate = new Date(pickupInMilli);
+
       const { data } = await carsApi.filteredCarByTime({
         pickUpTime: isoDate.toISOString(),
       });

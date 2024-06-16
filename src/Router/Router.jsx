@@ -15,6 +15,7 @@ import AdminRoute from "../admin-page/AdminRoute";
 import AdminLandingPage from "../admin-page/components/AdminLandingPage";
 import OrderWrapper from "../admin-page/layout/OrderWrapper";
 import NavigatePolice from "../authentication/NavigatePolice";
+import OrderEditWrapper from "../admin-page/layout/OrderEditWrapper";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const MainWrapper = lazy(() => import("../layouts/MainWrapper"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/reservation",
         element: <OrderWrapper />,
+      },
+      {
+        path: "/admin/reservation/:orderId",
+        element: <OrderEditWrapper />,
       },
     ],
   },
