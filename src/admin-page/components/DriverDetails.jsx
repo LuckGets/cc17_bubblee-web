@@ -1,7 +1,14 @@
 import React from "react";
 import { RightArrow } from "../../assets/icons/icons";
 
-function DriverDetails({ details, carPlate, onClick, chosenDriver, id }) {
+function DriverDetails({
+  details,
+  carPlate,
+  onClick,
+  chosenDriver,
+  id,
+  orderStatus,
+}) {
   return (
     <div
       onClick={() => onClick(id)}
@@ -26,7 +33,9 @@ function DriverDetails({ details, carPlate, onClick, chosenDriver, id }) {
         <h3 className="text-2xl">Name : {details?.name}</h3>
         <h3 className="text-2xl">Car Plate : {carPlate}</h3>
         <div className="flex justify-between items-center gap-20">
-          {chosenDriver === id ? (
+          {orderStatus === "RESERVED" ? (
+            ""
+          ) : chosenDriver === id ? (
             <p className="text-3xl text-yellow-700">SELECT</p>
           ) : (
             <button className="self-start flex items-center w-full bg-blue-500 text-white text-xl p-2">

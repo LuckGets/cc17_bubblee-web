@@ -77,17 +77,33 @@ function OrderCard({ details, hovorable = true }) {
           </div>
         )}
         <div className="flex justify-between items-center">
-          <div className="flex items-baseline gap-6 pt-5">
-            <h1 className="text-4xl underline">STATUS: </h1>
-            <span
-              className={`text-4xl p-2 ${
-                details?.orderStatus === "FINDING"
-                  ? "bg-red-500"
-                  : "bg-green-400"
-              } text-white rounded-lg`}
-            >
-              {details?.orderStatus}
-            </span>
+          <div className="flex w-full items-baseline gap-6 pt-5 justify-between px-10">
+            <div>
+              <span className="text-4xl ">STATUS: </span>
+              <span
+                className={`text-4xl p-2 ${
+                  details?.orderStatus === "FINDING"
+                    ? "bg-blue-300"
+                    : details?.orderStatus === "RESERVED"
+                    ? "bg-yellow-500"
+                    : details?.orderStatus === "CANCEL"
+                    ? "bg-red-500"
+                    : "bg-green-500"
+                } text-white rounded-lg`}
+              >
+                {details?.orderStatus}
+              </span>
+            </div>
+            <div>
+              <span className="text-4xl">PAID STATUS :</span>
+              <span
+                className={`text-4xl p-2 ${
+                  details?.transactionId ? "bg-green-500" : "bg-red-500"
+                } text-white rounded-lg`}
+              >
+                {details?.transactionId ? "PAID" : "NOT-PAID"}
+              </span>
+            </div>
           </div>
           <div className="px-10">
             {hovorable ? (

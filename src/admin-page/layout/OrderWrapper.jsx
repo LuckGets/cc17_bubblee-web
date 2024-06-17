@@ -3,10 +3,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import reserveApi from "../../axios/reserve";
 import OrderCard from "../components/OrderCard";
+import ButtonState from "../components/ButtonState";
+import { AxiosError } from "axios";
 
 const INIT_OrderState = {
   UnreservedOrder: false,
   AllOrder: false,
+  today: false,
+  expired: false,
 };
 
 function OrderWrapper() {
@@ -27,51 +31,67 @@ function OrderWrapper() {
     }
   };
 
+  const handleChangeState = (e) =>
+    setOrderState({ ...INIT_OrderState, [e.target.name]: true });
+
   const fetchAllOrder = async () => {
     const { data } = await reserveApi.getAllOrder();
     console.log(data);
     setDetail(data);
   };
 
+  const fetchTodayOrders = async () => {
+    try {
+      const { data } = await reserveApi.getTodayOrder();
+      setDetail(data);
+    } catch (err) {
+      console.log(err);
+      if (err instanceof AxiosError) {
+        alert(err.data.statusText);
+      }
+    }
+  };
+
+  const fetchExpiredOrders = async () => {
+    const { data } = await reserveApi.getExpiredOrder();
+    setDetail(data);
+  };
+
   useEffect(() => {
     if (!details) fetchAllUnReservedOrder();
 
-    if (orderState.UnreservedOrder && !orderState.AllOrder) {
+    if (orderState.UnreservedOrder) {
       fetchAllUnReservedOrder();
     }
 
-    if (orderState.AllOrder && !orderState.UnreservedOrder) {
+    if (orderState.AllOrder) {
       fetchAllOrder();
+    }
+
+    if (orderState.today) {
+      fetchTodayOrders();
+    }
+
+    if (orderState.expired) {
+      fetchExpiredOrders();
     }
   }, [orderState]);
 
   return (
     <div className="flex flex-col gap-8 w-5/6 bg-white p-20 min-h-[100vh]">
       <div className="flex gap-10 p-4">
-        <button
-          name="AllOrder"
-          onClick={(e) =>
-            setOrderState(() => ({
-              ...INIT_OrderState,
-              [e.target.name]: true,
-            }))
-          }
-          className="py-3 px-8 text-lg bg-gray-200 rounded-full text-gray-700"
-        >
+        <ButtonState name="AllOrder" onClick={handleChangeState}>
           All
-        </button>
-        <button
-          name="UnreservedOrder"
-          onClick={(e) => {
-            setOrderState(() => ({
-              ...INIT_OrderState,
-              [e.target.name]: true,
-            }));
-          }}
-          className="p-3 text-lg bg-gray-200 rounded-full text-gray-700"
-        >
-          Unreseved Order
-        </button>
+        </ButtonState>
+        <ButtonState name="Unreserved" onClick={handleChangeState}>
+          Unreserved
+        </ButtonState>
+        <ButtonState name="today" onClick={handleChangeState}>
+          Today-Jobs
+        </ButtonState>
+        <ButtonState name="expired" onClick={handleChangeState}>
+          Expired-Jobs
+        </ButtonState>
         <button></button>
       </div>
       {details?.map((item) => (

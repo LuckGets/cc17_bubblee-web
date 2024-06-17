@@ -26,4 +26,14 @@ reserveApi.assignDriverToOrder = (orderId, data) =>
 
 reserveApi.getAllOrder = () => axios.get("/reserve/history/all");
 
+reserveApi.getTodayOrder = () => axios.get("/reserve/history/today");
+
+reserveApi.getExpiredOrder = () => axios.get("/reserve/history/expired");
+
+reserveApi.finishingJob = (orderId) =>
+  axios.patch(`reserve/order/finish/${orderId}`);
+
+reserveApi.cancelJob = (orderId) =>
+  axios.patch(`reserve/order/cancel/${orderId}`);
+
 export default reserveApi;
