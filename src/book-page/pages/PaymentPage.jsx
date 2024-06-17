@@ -8,6 +8,9 @@ import CarDetails from "../components/CarDetails";
 import Button from "../components/Button";
 import transactionAPi from "../../axios/transaction";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 function PaymentPage() {
   const {
@@ -16,13 +19,15 @@ function PaymentPage() {
     pickupPlace,
     dropOffPlace,
     modelId,
+    totalCost,
     setTempOrderId,
   } = useReserveContext();
   const { authenUser } = useAuthenContext();
 
   const navigate = useNavigate();
 
-  const [transType, setTransType] = useState();
+  const [carImage, setCarImage] = useState(null);
+  const [transType, setTransType] = useState(null);
 
   const handleOnPayment = async (e) => {
     try {
@@ -49,42 +54,62 @@ function PaymentPage() {
       alert("Transaction completed. Booking success!");
       navigate("/book/success");
     } catch (err) {
-      console.log(err);
+      if (err instanceof AxiosError) console.log(err);
+      alert(`${err.data.message}`);
     }
   };
 
+  useEffect(() => {
+    const fetchCarMainImage = async () => {
+      const { data } = await carsApi.getMainImageByCarId(+modelId);
+      if (!data) {
+        return <Navigate to="/book/main" />;
+      }
+      console.log(data);
+      setCarImage(data);
+    };
+    fetchCarMainImage();
+  });
+
   return (
     <>
-      <div className="flex p-5 gap-5">
+      <div className="flex pb-10 gap-5">
         <div className="w-full flex flex-col justify-between gap-5">
           {authenUser ? (
             <CustomerInform />
           ) : (
-            <CustomerInform guestInfo={guestInfo} />
+            <CustomerInform editAble={false} guestInfo={guestInfo} />
           )}
-          <CarDetails />
+          <CarDetails title="large" />
         </div>
-        <div className="w-full border-2 border-black flex flex-col gap-5">
-          Payment part
-          <div>
-            <div>
-              <input type="radio" />
-              <label htmlFor="">Cash</label>
-            </div>
-            <div>
+        <div className="w-full flex flex-col gap-5 px-4">
+          <h1 className="text-4xl">Disclaimer</h1>
+          <div className="flex flex-col gap-8">
+            <p className="text-xl">
+              Please recheck the trip detail before proceed on the nextpage.
+              After "Confirm payment" is clicked, your order will be confirmed
+              and we will contact you one day before the pick-up time.
+            </p>
+            <p className="text-gray-500">
+              *You can pay after the trip is done to our driver by cash or
+              qrcode. Thank you for consider using our service.*
+            </p>
+            <p className="text-2xl">HAVE A SAFE TRIP!</p>
+            {/* <div>
               <input type="radio" />
               <label htmlFor="">QR code</label>
             </div>
             <div>
               <input type="radio" />
               <label htmlFor="">Credit card</label>
-            </div>
+            </div> */}
           </div>
+          <img className="rounded-lg" src={carImage?.imagePath} alt="" />
         </div>
       </div>
       <div className="flex justify-between">
         <div className="flex gap-5">
-          <Button to="/book" bg="white">
+          <Button to="/book/confirm" bg="white">
             Back
           </Button>
           <Button to="/">Cancel</Button>

@@ -3,7 +3,10 @@ import { DollarsBank, Person } from "../../../assets/icons/icons";
 
 function CarsCard({ details }) {
   return (
-    <div role="button" className="min-w-[450px] min-h-[260px] hover:shadow-lg">
+    <div
+      role="button"
+      className="min-w-[450px] min-h-[260px] hover:shadow-lg hover:scale-105 duration-200 ease-in-out"
+    >
       <div className="max-w-[450px] max-h-[260px]">
         <img
           className="max-w-[450px] min-h-[300px] rounded-t-xl"

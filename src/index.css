@@ -10,6 +10,6 @@
 
 @layer components {
   .map-container {
-    @apply min-w-[30rem]  min-h-[30rem];
+    @apply min-w-[35rem]  min-h-[35rem] mb-7;
   }
 }

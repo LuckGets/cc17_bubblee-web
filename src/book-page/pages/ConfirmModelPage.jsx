@@ -18,6 +18,8 @@ import carsApi from "../../axios/cars";
 import reserveApi from "../../axios/reserve";
 import { useNavigate } from "react-router-dom";
 import CarDetails from "../components/CarDetails";
+import { AxiosError } from "axios";
+import { Navigate } from "react-router-dom";
 
 const INIT_ERROR = {
   name: "",
@@ -53,6 +55,10 @@ function ConfirmModelPage() {
     duration,
   } = useReserveContext();
 
+  if (!pickupLo || !dropOffLo) {
+    return <Navigate to="/book" />;
+  }
+
   useEffect(() => {
     const fetchCarData = async () => {
       try {
@@ -60,6 +66,9 @@ function ConfirmModelPage() {
         setCarDetail(data);
       } catch (err) {
         console.log(err);
+        if (err instanceof AxiosError) {
+          alert(`${err.response.statusText}. Please try again.`);
+        }
       }
     };
     fetchCarData();
@@ -129,6 +138,12 @@ function ConfirmModelPage() {
         data.guestPhone = guestInfo.phone;
       }
 
+      if (cost < 100) {
+        return alert(
+          "Sorry but we have booked policy to have total cost per trip to have at least 100 THB before booking. Please try again."
+        );
+      }
+
       if (authenUser) {
         data.userId = authenUser.id;
       }
@@ -158,60 +173,46 @@ function ConfirmModelPage() {
   };
 
   return (
-    <div className="p-10">
-      <div className="flex justify-between gap-10">
-        <div className="w-full flex flex-col justify-between gap-5">
-          {authenUser ? (
-            <CustomerInform handleEditInfo={handleEditInfo} />
-          ) : authenGuest ? (
-            <CustomerInform
-              handleEditInfo={handleEditInfo}
-              guestInfo={guestInfo}
-            />
-          ) : (
-            <ContactInform
-              error={errorGuest}
-              handleSubmit={handleSubmitGuest}
-              guestInfo={guestInfo}
-              setGuestInfo={handleChangeInput}
-              authenGuest={authenGuest}
-            />
-          )}
-          <CarDetails title="medium" />
-        </div>
-        <div className="w-full">
-          <div className="w-full border-2 border-black mb-2">
-            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-              <div className="h-full">
-                {/* <Map
-                  mapId={import.meta.env.VITE_MAPS_ID}
-                  defaultCenter={{ lat: 13.746389, lng: 100.535004 }}
-                  defaultZoom={11}
-                  gestureHandling="greedy"
-                  reuseMaps={true}
-                  disableDefaultUI={true}
-                ></Map> */}
-                FAKE GOOGLE MAP
-              </div>
-            </APIProvider>
+    <>
+      <div className="p-10">
+        <div className="flex justify-between gap-10">
+          <div className="w-full flex flex-col justify-between gap-5">
+            {authenUser ? (
+              <CustomerInform handleEditInfo={handleEditInfo} />
+            ) : authenGuest ? (
+              <CustomerInform
+                handleEditInfo={handleEditInfo}
+                guestInfo={guestInfo}
+              />
+            ) : (
+              <ContactInform
+                error={errorGuest}
+                handleSubmit={handleSubmitGuest}
+                guestInfo={guestInfo}
+                setGuestInfo={handleChangeInput}
+                authenGuest={authenGuest}
+              />
+            )}
+            <CarDetails title="large" />
+            <div className="min-w-[28rem]">
+              <img className="rounded-lg" src={carDetail?.imagePath} />
+            </div>
           </div>
-          <div className="min-w-[28rem]">
-            <img src={carDetail?.imagePath} />
-          </div>
+          <MapRenderer pickup={pickupLo} dropoff={dropOffLo} />
         </div>
-      </div>
-      <div className="flex justify-between">
-        <div className="flex gap-5">
-          <Button to="/book" bg="white">
-            Back
+        <div className="flex justify-between pt-10">
+          <div className="flex gap-5">
+            <Button to="/book/model" bg="white">
+              Back
+            </Button>
+            <Button to="/">Cancel</Button>
+          </div>
+          <Button onClick={handleOnSubmit} text="white" bg="black">
+            Confirm Booking
           </Button>
-          <Button to="/">Cancel</Button>
         </div>
-        <Button onClick={handleOnSubmit} text="white" bg="black">
-          Confirm Booking
-        </Button>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -10,8 +10,8 @@ import { useState } from "react";
 
 function ModelCard({ src, carImg, openDetails, id }) {
   return (
-    <div className="">
-      <img className="object-cover bg-no-repeat max-w-[28rem] " src={src} />
+    <div className="min-w-[30rem] max-h-[20rem] p-5">
+      <img className="object-cover bg-no-repeat w-full h-full" src={src} />
       {/* <div className="grid grid-cols-3 gap-2">
         {openDetails[id] &&
           carImg?.map((item) => <CarImageCard src={item.imagePath} />)}

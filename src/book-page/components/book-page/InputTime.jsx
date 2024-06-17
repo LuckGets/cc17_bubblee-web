@@ -6,20 +6,16 @@ function InputTime({ min }) {
 
   return (
     <div>
-      <h1>Pick the time and place</h1>
-      <div className="flex gap-5">
-        <div>
-          <label className="text-2xl" htmlFor="">
-            Pick up time:
-          </label>
-          <input
-            className="border-2 border-gray-500 w-full"
-            type="datetime-local"
-            min={min}
-            value={pickUpTime}
-            onChange={(e) => setPickUpTime(e.target.value)}
-          />
-        </div>
+      <div className="w-full flex flex-col gap-2">
+        <label className="text-lg">Pick up time:</label>
+        <input
+          placeholder="*pick-up time"
+          className="border-2 border-gray-400 w-full text-gray-600"
+          type="datetime-local"
+          min={min}
+          value={pickUpTime}
+          onChange={(e) => setPickUpTime(e.target.value)}
+        />
       </div>
     </div>
   );

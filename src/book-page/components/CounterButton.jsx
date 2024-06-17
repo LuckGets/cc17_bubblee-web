@@ -6,7 +6,7 @@ function CounterButton({ children, onClick, name }) {
       type="button"
       name={name}
       onClick={onClick}
-      className="bg-bubblee-light-gray py-2 px-3"
+      className="bg-black py-4 px-4 rounded-sm text-white"
     >
       {children}
     </button>

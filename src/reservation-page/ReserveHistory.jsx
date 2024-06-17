@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import useAuthenContext from "../authentication/hooks/useAuthenContext";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -16,6 +15,7 @@ function ReserveHistory() {
     try {
       if (!authenUser) return;
       const { data } = await reserveApi.findReserveHistoryByUserId();
+      console.log(data);
       setUserHistory(data);
     } catch (err) {
       console.log(err);
@@ -25,7 +25,7 @@ function ReserveHistory() {
   useEffect(() => {
     if (userHistory) return;
     fetchOrderHistory();
-  });
+  }, []);
 
   return (
     <div className="p-5">

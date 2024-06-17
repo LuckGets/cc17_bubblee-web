@@ -4,6 +4,7 @@ import Button from "../book-page/components/Button";
 import { useState } from "react";
 import BookDetails from "./components/BookDetails";
 import reserveApi from "../axios/reserve";
+import { AxiosError } from "axios";
 
 const INIT_INPUT = {
   orderId: "",
@@ -36,7 +37,10 @@ function ReserveWrapper() {
         setIsOrder(true);
       }
     } catch (err) {
-      console.log(err);
+      if (err instanceof AxiosError) console.log(err);
+      return alert(
+        `${err.response.data.message} Please Enter the information you have booked with us.`
+      );
     }
   };
 

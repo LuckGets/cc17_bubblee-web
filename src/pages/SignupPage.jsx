@@ -50,7 +50,8 @@ function SignupPage() {
       }
       setErrInput("");
       await authenApi.register(input);
-      await userLogin({emailOrPhone : input.phone, password : input.password})
+      await userLogin({ emailOrPhone: input.phone, password: input.password });
+      alert("Register successfully. Navigate to home page.");
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -104,7 +105,7 @@ function SignupPage() {
               <div className="flex gap-5">
                 <button
                   type="submit"
-                  className="bg-red-700 py-2 px-10 rounded-lg"
+                  className="bg-red-500 py-2 px-10 rounded-lg"
                 >
                   Signup
                 </button>

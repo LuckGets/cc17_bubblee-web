@@ -12,7 +12,7 @@ function SuccessPage() {
   return (
     <div className="w-full h-full py-20 items-center gap-10 flex flex-col">
       <div className="flex flex-col gap-5 p-10 rounded-xl border-2 border-black w-4/6">
-        <h1 className="text-center text-3xl">Payment Success</h1>
+        <h1 className="text-center text-3xl">Payment Success!</h1>
         <h2 className="text-2xl underline">TRIP DETAILS</h2>
         <div className="flex items-baseline gap-5">
           <p className="text-xl">

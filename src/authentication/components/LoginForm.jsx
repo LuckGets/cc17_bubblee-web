@@ -17,7 +17,7 @@ const INIT_errorDisplayInput = {
   password: "",
 };
 
-function LoginForm({closeModal}) {
+function LoginForm({ closeModal }) {
   const [input, setInput] = useState(INIT_INPUT);
   const [errInput, setErrInput] = useState(INIT_errorDisplayInput);
 
@@ -37,7 +37,7 @@ function LoginForm({closeModal}) {
       setErrInput({ ...INIT_errorDisplayInput });
       await userLogin(input);
       if (closeModal) {
-        closeModal()
+        closeModal();
       }
       navigate("/");
     } catch (err) {
@@ -76,13 +76,13 @@ function LoginForm({closeModal}) {
           <p className="text-[0.9rem] opacity-50">Forget password?</p>
         </div>
         <div>
-          <div className="flex flex-col items-center">
+          {/* <div className="flex flex-col items-center">
             <p className="text-[1.2rem] font-semibold">or</p>
             <button className="m-3 w-1/2 bg-red-300">
               Sign in with google
             </button>
             <button className="w-1/2 bg-blue-300">Sign in with facebook</button>
-          </div>
+          </div> */}
           <div className="mt-5 flex justify-center text-white">
             <button
               type="submit"

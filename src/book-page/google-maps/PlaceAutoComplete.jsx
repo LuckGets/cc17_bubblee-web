@@ -3,7 +3,12 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 
-const PlaceAutoComplete = ({ onPlaceSelect, title }) => {
+const PlaceAutoComplete = ({
+  onPlaceSelect,
+  placeholder,
+  place = null,
+  className,
+}) => {
   const [placeAutoComplete, setPlaceAutoComplete] = useState(null);
   const inputRef = useRef(null);
   const places = useMapsLibrary("places");
@@ -25,10 +30,12 @@ const PlaceAutoComplete = ({ onPlaceSelect, title }) => {
   }, [onPlaceSelect, placeAutoComplete]);
 
   return (
-    <div className="width-[4rem] gap-2">
+    <div className={`w-full gap-2 ${className}`}>
       <input
-        className="border-2 border-black w-full h-[2rem] py-[12px] text-xl"
+        className={`border-none w-full h-[2rem] py-5 px-2 text-md`}
         ref={inputRef}
+        value={place}
+        placeholder={placeholder}
         type="text"
       />
     </div>

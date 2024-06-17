@@ -18,9 +18,12 @@ reserveApi.findUserIdByOrderId = (orderId) =>
 reserveApi.cancelOrder = (orderId) =>
   axios.delete(`/reserve/history/${orderId}`);
 
-reserveApi.getAllUnReservedOrder = () => axios.get("/reserve/history/all");
+reserveApi.getAllUnReservedOrder = () =>
+  axios.get("/reserve/history/allunreserved");
 
 reserveApi.assignDriverToOrder = (orderId, data) =>
   axios.patch(`/reserve/assign/${orderId}`, data);
+
+reserveApi.getAllOrder = () => axios.get("/reserve/history/all");
 
 export default reserveApi;

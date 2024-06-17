@@ -206,11 +206,11 @@ export function DollarsBank() {
       xml:space="preserve"
       fill="#000000"
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
@@ -228,7 +228,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M60,36c1.1,0,2-0.9,2-2V2 c0-1.1-0.9-2-2-2H2C0.9,0,0,0.9,0,2v32c0,1.1,0.9,2,2,2H60L60,36z"
             ></path>{" "}
             <path
@@ -236,7 +236,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M5,4h20.9"
             ></path>{" "}
             <path
@@ -244,7 +244,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M5,32h20.9"
             ></path>{" "}
             <path
@@ -252,7 +252,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M36.2,4H57"
             ></path>{" "}
             <path
@@ -260,7 +260,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M36.2,32H57"
             ></path>{" "}
             <circle
@@ -268,7 +268,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               cx="31"
               cy="18"
               r="15"
@@ -280,7 +280,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M27.1,22.4c0,2,1.8,3.6,4,3.6 s4-1.6,4-3.6c0-2.9-4-4.4-4-4.4s-4-1.5-4-4.4c0-2,1.8-3.6,4-3.6s4,1.6,4,3.6"
             ></path>{" "}
             <path
@@ -288,7 +288,7 @@ export function DollarsBank() {
               sketch:type="MSShapeGroup"
               fill="none"
               stroke="#000000"
-              stroke-width="2"
+              strokeWidth="2"
               d="M31.1,6.1V30"
             ></path>{" "}
           </g>{" "}
@@ -307,24 +307,24 @@ export function CorrectMark() {
       xmlns:xlink="http://www.w3.org/1999/xlink"
       fill="#000000"
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         {" "}
         <title></title> <desc></desc> <defs></defs>{" "}
         <g
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
           id="Page-1"
           stroke="none"
-          stroke-width="1"
+          strokeWidth="1"
         >
           {" "}
-          <g fill-rule="nonzero" id="correct">
+          <g fillRule="nonzero" id="correct">
             {" "}
             <path
               d="M34.5,55.1 C32.9,53.5 30.3,53.5 28.7,55.1 C27.1,56.7 27.1,59.3 28.7,60.9 L47.6,79.8 C48.4,80.6 49.4,81 50.5,81 C50.6,81 50.6,81 50.7,81 C51.8,80.9 52.9,80.4 53.7,79.5 L101,22.8 C102.4,21.1 102.2,18.5 100.5,17 C98.8,15.6 96.2,15.8 94.7,17.5 L50.2,70.8 L34.5,55.1 Z"
@@ -349,24 +349,81 @@ export function CrossMark({ className = null }) {
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
-      aria-hidden="true"
+      ariaHidden="true"
       role="img"
       class="iconify iconify--emojione-monotone"
       preserveAspectRatio="xMidYMid meet"
       fill="#000000"
       className={className}
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         <path
           d="M62 10.571L53.429 2L32 23.429L10.571 2L2 10.571L23.429 32L2 53.429L10.571 62L32 40.571L53.429 62L62 53.429L40.571 32z"
           fill="#000000"
         ></path>
+      </g>
+    </svg>
+  );
+}
+
+export function MapMarker() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill="#000000"
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <rect width="16" height="16" id="icon-bound" fill="none"></rect>{" "}
+        <path d="M8,0C4.688,0,2,2.688,2,6c0,6,6,10,6,10s6-4,6-10C14,2.688,11.312,0,8,0z M8,8C6.344,8,5,6.656,5,5s1.344-3,3-3s3,1.344,3,3 S9.656,8,8,8z"></path>{" "}
+      </g>
+    </svg>
+  );
+}
+
+export function CircleMark() {
+  return (
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path fill="#fff" d="M8 0a8 8 0 100 16A8 8 0 008 0z"></path>
+      </g>
+    </svg>
+  );
+}
+
+export function LoaderIcon({ className = null }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      height="2rem"
+      width="2rem"
+      fill="#000"
+      className={className}
+    >
+      <g>
+        <path d="M10,1V3a7,7,0,1,1-7,7H1a9,9,0,1,0,9-9Z" />
       </g>
     </svg>
   );

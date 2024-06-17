@@ -28,6 +28,7 @@ function MapRenderer({ pickup, dropoff }) {
     <>
       <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
         <div className="map-container">
+          <p className="bg-black text-white p-3 text-lg">Map summary</p>
           <Map
             mapId={import.meta.env.VITE_MAPS_ID}
             defaultCenter={{ lat: 13.746389, lng: 100.535004 }}

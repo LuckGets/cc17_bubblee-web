@@ -1,12 +1,14 @@
 import React from "react";
 import Button from "./Button";
 
-function ModelDetails({ id, details, isTextShow }) {
+function ModelDetails({ id, details, isTextShow, carModel }) {
   return (
-    <div className="gap-3 flex flex-col">
+    <div
+      className={`${carModel === id ? "text-white" : ""} gap-3 flex flex-col`}
+    >
       <h1 className="text-2xl">{details.carModel.split("_").join(" ")}</h1>
       <div className="flex flex-col gap-2">
-        <p className="text-gray-500">
+        <p className="">
           Maximum number of passenger : {details.maxPassengerNum}
         </p>
         <div className=" flex justify-end mt-5">
@@ -14,11 +16,6 @@ function ModelDetails({ id, details, isTextShow }) {
             {details.costPerKM} THB/KM
           </h2>
         </div>
-        {isTextShow[id] ? (
-          <p className="text-bubblee-orange">Click to see more details...</p>
-        ) : (
-          <p className="text-white">spacer</p>
-        )}
       </div>
     </div>
   );

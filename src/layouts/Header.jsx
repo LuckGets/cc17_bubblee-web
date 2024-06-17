@@ -5,15 +5,24 @@ import Modal from "../components/Modal";
 import LoginForm from "../authentication/components/LoginForm";
 import useAuthenContext from "../authentication/hooks/useAuthenContext";
 import UnauthenHeader from "./headers/UnauthenHeader";
-import { PhoneHeaderIcon } from "../assets/icons/icons";
+import { CircleMark, PhoneHeaderIcon } from "../assets/icons/icons";
 import AuthenHeader from "./headers/AuthenHeader";
+
+const headerState = {
+  reservation: false,
+  booking: false,
+};
 
 function Header() {
   const [openModal, setOpenModal] = useState(false);
+  const [showHover, setShowHover] = useState(headerState);
+
+  const onHover = (name) => setShowHover({ ...showHover, [name]: true });
+  const onLeave = (name) => setShowHover({ ...showHover, [name]: false });
 
   const { authenUser } = useAuthenContext();
   return (
-    <div className="flex justify-between items-center w-full min-h-[4rem] bg-[#464646]">
+    <div className="flex justify-between items-center w-full bg-bubblee-orange min-h-[4.5rem] sticky top-0 z-10">
       <div className="ml-16">
         <Link role="button" to="/" className="text-3xl text-white">
           Logo
@@ -23,15 +32,43 @@ function Header() {
         <div className="px-5 text-white">
           <p className="">About us</p>
         </div>
-        <Link to="/reserve" className="px-5 text-white">
-          <p>Reservation</p>
-        </Link>
-        <Link to="/book" className="px-5 text-white">
-          <p>Booking</p>
-        </Link>
-        <div className="px-5 text-white">
-          <p>Drive with us</p>
+        <div className="flex flex-col items-center">
+          <Link
+            onMouseEnter={() => onHover("reservation")}
+            onMouseLeave={() => onLeave("reservation")}
+            to="/reserve"
+            className="px-5 text-white"
+          >
+            <p>Reservation</p>
+          </Link>
+          <div
+            className={`${
+              showHover["reservation"] ? "w-2" : "w-0"
+            } hover:scale-110 duration-200 ease-in`}
+          >
+            <CircleMark />
+          </div>
         </div>
+        <div className="flex flex-col items-center">
+          <Link
+            onMouseEnter={() => onHover("booking")}
+            onMouseLeave={() => onLeave("booking")}
+            to="/book"
+            className="px-5 text-white"
+          >
+            <p>Booking</p>
+          </Link>
+          <div
+            className={`${
+              showHover["booking"] ? "w-2" : "w-0"
+            } hover:scale-110 duration-200 ease-in`}
+          >
+            <CircleMark />
+          </div>
+        </div>
+        <Link className="px-5 text-white">
+          <p>Drive with us</p>
+        </Link>
       </div>
       {authenUser ? (
         <div className="flex text-white mr-16 px-10">

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 function OrderCard({ details, hovorable = true }) {
   if (
-    details?.pickUpTime &&
-    details?.reservedAt &&
+    details?.pickUpTime ||
+    details?.reservedAt ||
     details?.estimatedFinishTime
   ) {
     const localPickUpTime = convertISOtoLocal(details.pickUpTime);
@@ -25,23 +25,35 @@ function OrderCard({ details, hovorable = true }) {
   return (
     <div
       role={`${hovorable ? "button" : null}`}
-      onClick={() => navigate(`/admin/reservation/${details?.orderId}`)}
+      onClick={() =>
+        navigate(`/admin/reservation/${details?.orderId || details?.id}`)
+      }
       onMouseEnter={() => setShowDetail(true)}
       onMouseLeave={() => setShowDetail(false)}
       className={`rounded-lg shadow-lg ${
         hovorable ? "hover:shadow-2xl" : ""
-      } bg-gray-300 w-11/12`}
+      }  w-11/12 shadow-2xl`}
     >
-      <h1 className="text-4xl p-5 bg-gray-800 text-white rounded-t-lg">
+      <h1 className="text-2xl p-5 bg-gray-800 text-white rounded-t-lg">
         Order ID : {details?.orderId || details?.id}
       </h1>
       <div className="p-5 flex flex-col gap-3">
-        <span className="flex w-2/12 p-3 bg-blue-500 text-3xl text-white">
+        <span className="flex w-2/12 p-3 bg-blue-500 text-xl text-white">
           Model ID: {details?.modelId}
         </span>
         <div className="flex gap-10">
-          <h1 className="text-xl">Pick up: {details?.pickupPlace}</h1>
-          <h1 className="text-xl">Drop off: {details?.dropOffPlace}</h1>
+          <h1 className="text-lg">
+            Pick up:{" "}
+            <span className="text-xl underline pl-2">
+              {details?.pickupPlace}
+            </span>
+          </h1>
+          <h1 className="text-lg">
+            Drop off:{" "}
+            <span className="text-xl underline pl-2">
+              {details?.dropOffPlace}
+            </span>
+          </h1>
         </div>
         <h1 className="text-xl">
           Pick-up Time :
@@ -53,13 +65,13 @@ function OrderCard({ details, hovorable = true }) {
           Eistimated time to Finish : {details?.estimatedFinishTime}
         </h1>
         <h1>{details?.isRoundTrip ? "Round Trip" : "One-way Trip"}</h1>
-        <h1 className="text-5xl text-pink-700">{details?.totalCost} THB</h1>
+        <h1 className="text-xl text-red-500">{details?.totalCost} THB</h1>
         {details?.userId ? (
           <h1>User ID : {details?.userId}</h1>
         ) : (
           <div className="flex gap-5">
-            <h1 className="text-xl">Customer Name : {details?.guestName}</h1>{" "}
-            <h1 className="text-xl">
+            <h1 className="text-lg">Customer Name : {details?.guestName}</h1>{" "}
+            <h1 className="text-lg">
               Customer Phone number : {details?.guestPhone}
             </h1>
           </div>
@@ -79,7 +91,7 @@ function OrderCard({ details, hovorable = true }) {
           </div>
           <div className="px-10">
             {hovorable ? (
-              <button className="text-3xl p-5 rounded-lg text-bubblee-orange">
+              <button className="text-md p-5 rounded-lg text-bubblee-orange">
                 CLICK TO ASSIGN OR EDIT
               </button>
             ) : null}

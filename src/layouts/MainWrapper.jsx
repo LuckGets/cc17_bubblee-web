@@ -5,11 +5,13 @@ import Footer from "./Footer";
 
 function MainWrapper() {
   return (
-    <div className="overflow-hidden">
+    <>
       <Header />
-      <Outlet />
+      <div className="overflow-hidden">
+        <Outlet />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

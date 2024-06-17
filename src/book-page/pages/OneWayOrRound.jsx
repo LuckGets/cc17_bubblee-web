@@ -2,7 +2,10 @@ import React from "react";
 import Card from "../components/Card";
 import useReserveContext from "../hooks/useReserveContext";
 
-const contentArr = ["lorem1", "lorem2"];
+const contentArr = [
+  "Book our customer's popular choice one way trip service. You choose the pick-up place you desired and we are striving to take you to drop-off place safe and sound.",
+  "lorem2",
+];
 
 function OneWayOrRound() {
   const { setIsRoundTrip } = useReserveContext();
@@ -14,7 +17,6 @@ function OneWayOrRound() {
         title="One Way Trip"
         content={contentArr[0]}
       />
-      <button></button>
     </div>
   );
 }

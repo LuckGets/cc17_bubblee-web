@@ -3,12 +3,12 @@ import Router from "./Router/Router";
 import AuthenContextProvider from "./authentication/contexts/authenContext";
 import { Suspense } from "react";
 import ReserveContextProvider from "./book-page/context/ReserveContext";
-import AdminRoute from "./admin-page/AdminRoute";
+import Spinner from "./components/Spinner";
 
 function App() {
   return (
     <>
-      <Suspense>
+      <Suspense fallback={<Spinner />}>
         <AuthenContextProvider>
           <ReserveContextProvider>
             <Router />
