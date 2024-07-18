@@ -14,11 +14,14 @@ import PlaceAutoComplete from "./PlaceAutoComplete";
 
 import MapHandler from "./MapHandler";
 import Direction from "./Direction";
+import useReserveContext from "../hooks/useReserveContext";
 
 function MapRenderer({ pickup, dropoff }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [secondMarkerRef, secondMarker] = useAdvancedMarkerRef();
   const [open, setOpen] = useState(true);
+
+  const { pickUpLatLng, dropOffLatLng } = useReserveContext();
 
   useEffect(() => {
     if (pickup && dropoff) setOpen(false);
@@ -48,18 +51,22 @@ function MapRenderer({ pickup, dropoff }) {
               </>
             )}
             <Direction
-              origin={{
-                lat: pickup?.geometry.location.lat(),
-                lng: pickup?.geometry.location.lng(),
-              }}
-              dest={{
-                lat: dropoff?.geometry.location.lat(),
-                lng: dropoff?.geometry.location.lng(),
-              }}
+              origin={
+                {
+                  lat: pickup?.geometry.location.lat(),
+                  lng: pickup?.geometry.location.lng(),
+                } || null
+              }
+              dest={
+                {
+                  lat: dropoff?.geometry.location.lat(),
+                  lng: dropoff?.geometry.location.lng(),
+                } || null
+              }
             />
           </Map>
-          <MapHandler place={pickup} marker={marker} />
-          <MapHandler place={dropoff} marker={secondMarker} />
+          <MapHandler place={pickup || pickUpLatLng} marker={marker} />
+          <MapHandler place={dropoff || dropOffLatLng} marker={secondMarker} />
         </div>
       </APIProvider>
     </>

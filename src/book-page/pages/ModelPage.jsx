@@ -31,8 +31,6 @@ function ModelPage() {
   const [carModel, setCarModel] = useState(null);
   const navigate = useNavigate();
 
-  const [openModal, setOpenModal] = useState(false);
-
   const { setModelId, pickUpTime, modelId, passengerNum } = useReserveContext();
 
   const fetchCarImage = async () => {
@@ -54,6 +52,10 @@ function ModelPage() {
 
   useEffect(() => {
     fetchCarImage();
+
+    if (modelId) {
+      setCarModel(modelId);
+    }
   }, []);
 
   const handleSubmitForm = (e) => {

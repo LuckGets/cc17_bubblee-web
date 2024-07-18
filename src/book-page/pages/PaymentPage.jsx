@@ -27,7 +27,6 @@ function PaymentPage() {
   const navigate = useNavigate();
 
   const [carImage, setCarImage] = useState(null);
-  const [transType, setTransType] = useState(null);
 
   const handleOnPayment = async (e) => {
     try {
@@ -49,8 +48,7 @@ function PaymentPage() {
       data.pickupPlace = pickupPlace;
       data.dropOffPlace = dropOffPlace;
       data.modelId = +modelId;
-      const response = await transactionAPi.createTransactionOrder(data);
-      console.log(response);
+      await transactionAPi.createTransactionOrder(data);
       alert("Transaction completed. Booking success!");
       navigate("/book/success");
     } catch (err) {
@@ -65,7 +63,6 @@ function PaymentPage() {
       if (!data) {
         return <Navigate to="/book/main" />;
       }
-      console.log(data);
       setCarImage(data);
     };
     fetchCarMainImage();

@@ -175,15 +175,15 @@ export function Person() {
     <svg
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
-      stroke-width="3"
+      strokeWidth="3"
       stroke="#000000"
       fill="none"
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
         <circle cx="32" cy="18.14" r="11.14"></circle>
@@ -198,12 +198,12 @@ export function DollarsBank() {
     <svg
       version="1.1"
       id="Layer_1"
-      xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+      xmlnssketch="http://www.bohemiancoding.com/sketch/ns"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 64 38"
-      enable-background="new 0 0 64 38"
-      xml:space="preserve"
+      enableBackground="new 0 0 64 38"
+      xmlSpace="preserve"
       fill="#000000"
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -304,7 +304,7 @@ export function CorrectMark() {
       viewBox="0 0 117 117"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       fill="#000000"
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -348,13 +348,12 @@ export function CrossMark({ className = null }) {
     <svg
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      ariaHidden="true"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      aria-hidden="true"
       role="img"
-      class="iconify iconify--emojione-monotone"
+      className="iconify iconify--emojione-monotone"
       preserveAspectRatio="xMidYMid meet"
       fill="#000000"
-      className={className}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
@@ -378,7 +377,7 @@ export function MapMarker() {
       viewBox="0 0 16 16"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       fill="#000000"
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>

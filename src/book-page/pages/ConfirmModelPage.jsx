@@ -52,12 +52,9 @@ function ConfirmModelPage() {
     distance,
     setTempOrderId,
     isRoundTrip,
+    tempOrderId,
     duration,
   } = useReserveContext();
-
-  if (!pickupLo || !dropOffLo) {
-    return <Navigate to="/book" />;
-  }
 
   useEffect(() => {
     const fetchCarData = async () => {
@@ -140,7 +137,7 @@ function ConfirmModelPage() {
 
       if (cost < 100) {
         return alert(
-          "Sorry but we have booked policy to have total cost per trip to have at least 100 THB before booking. Please try again."
+          "Sorry but we have booking policy to have total cost per trip to have at least 100 THB before booking. Please try again."
         );
       }
 
@@ -162,9 +159,17 @@ function ConfirmModelPage() {
       data.isRoundTrip = isRoundTrip;
       data.modelId = carDetail.modelId;
 
+      if (tempOrderId) {
+        data.id = tempOrderId;
+        setTempOrderId(null);
+        const { data } = await reserveApi.editReserveOrder(data);
+        setTempOrderId(data.id);
+        alert(`Order ${order.id} edited successful!`);
+        return navigate("/book/success");
+      }
+
       const order = await reserveApi.createReserveOrder(data);
       alert("Order booked! Please proceed to transaction process.");
-      console.log(order);
       setTempOrderId(order.data.id);
       navigate("/book/payment");
     } catch (err) {
@@ -208,7 +213,7 @@ function ConfirmModelPage() {
             <Button to="/">Cancel</Button>
           </div>
           <Button onClick={handleOnSubmit} text="white" bg="black">
-            Confirm Booking
+            {tempOrderId ? "Confirm Editing" : "Confirm Booking"}
           </Button>
         </div>
       </div>

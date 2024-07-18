@@ -21,6 +21,8 @@ function BookMainPage() {
     dropOffLo,
     setPickUpLo,
     setDropOffLo,
+    pickupPlace,
+    dropOffPlace,
     setPickUpPlace,
     setDropOffPlace,
     setPickUpLatLng,
@@ -43,6 +45,19 @@ function BookMainPage() {
 
   const handleSubmitMapPage = (e) => {
     e.preventDefault();
+    if (pickupPlace && dropOffPlace && pickUpTime) {
+      if (number.adults && number.children) {
+        setPassengerNum(number.adults + number.children);
+      }
+
+      if (number.adults && !number.children) {
+        setPassengerNum(number.adults);
+      }
+
+      setBagNum(number.bags);
+
+      return navigate("/book/model");
+    }
 
     if (!pickUpTime) {
       return alert("Please pick the time");
@@ -52,6 +67,7 @@ function BookMainPage() {
       alert("Please pick pickup and dropoff place");
       return;
     }
+
     setPickUpPlace(pickupLo?.name);
     setDropOffPlace(dropOffLo?.name);
     setPickUpLatLng(

@@ -15,7 +15,6 @@ function ReserveHistory() {
     try {
       if (!authenUser) return;
       const { data } = await reserveApi.findReserveHistoryByUserId();
-      console.log(data);
       setUserHistory(data);
     } catch (err) {
       console.log(err);
@@ -23,7 +22,7 @@ function ReserveHistory() {
   };
 
   useEffect(() => {
-    if (userHistory) return;
+    if (userHistory && userHistory.length >= 1) return;
     fetchOrderHistory();
   }, []);
 

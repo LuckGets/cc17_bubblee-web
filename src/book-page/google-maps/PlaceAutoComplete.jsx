@@ -6,7 +6,7 @@ import { useState } from "react";
 const PlaceAutoComplete = ({
   onPlaceSelect,
   placeholder,
-  place = null,
+  place,
   className,
 }) => {
   const [placeAutoComplete, setPlaceAutoComplete] = useState(null);

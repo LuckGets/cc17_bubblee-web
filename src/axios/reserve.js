@@ -4,6 +4,8 @@ const reserveApi = {};
 
 reserveApi.createReserveOrder = (data) => axios.post("/reserve/create", data);
 
+reserveApi.editReserveOrder = (data) => axios.patch("/reserve/edit", data);
+
 reserveApi.findReserveOrderDetails = (data) =>
   axios.post("/reserve/details", data);
 

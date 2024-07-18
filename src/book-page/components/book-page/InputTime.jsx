@@ -1,7 +1,9 @@
 import React from "react";
 import useReserveContext from "../../hooks/useReserveContext";
+import { useEffect } from "react";
+import formatDateTime from "../../../utils/formatDateTime";
 
-function InputTime({ min }) {
+function InputTime({ min, date }) {
   const { pickUpTime, setPickUpTime } = useReserveContext();
 
   return (

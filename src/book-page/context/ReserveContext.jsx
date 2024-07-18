@@ -52,9 +52,6 @@ function ReserveContextProvider({ children }) {
       const { data } = await reserveApi.findReserveOrderDetails({
         id: tempOrderId,
       });
-      setTempOrderId(null);
-      console.log(data);
-
       setNumber({ ...number, bags: data.bagNumber });
       setPickUpTime(data.pickUpTime);
       setIsRoundTrip(data.isRoundTrip);
