@@ -16,9 +16,11 @@ import AdminLandingPage from "../admin-page/components/AdminLandingPage";
 import OrderWrapper from "../admin-page/layout/OrderWrapper";
 import NavigatePolice from "../authentication/NavigatePolice";
 import OrderEditWrapper from "../admin-page/layout/OrderEditWrapper";
+import GoogleContextProvider from "../book-page/context/GoogleContext";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const MainWrapper = lazy(() => import("../layouts/MainWrapper"));
 const SignupPage = lazy(() => import("../pages/SignupPage"));
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 const router = createBrowserRouter([
   {

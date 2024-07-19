@@ -8,6 +8,8 @@ import {
   useAdvancedMarkerRef,
   ControlPosition,
   useApiIsLoaded,
+  useMap,
+  useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import { useState, useEffect, useRef } from "react";
 import PlaceAutoComplete from "./PlaceAutoComplete";
@@ -16,16 +18,29 @@ import MapHandler from "./MapHandler";
 import Direction from "./Direction";
 import useReserveContext from "../hooks/useReserveContext";
 
-function MapRenderer({ pickup, dropoff }) {
+function MapRenderer() {
+  const map = useMap();
+  const routesLibrary = useMapsLibrary("routes");
+
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [secondMarkerRef, secondMarker] = useAdvancedMarkerRef();
   const [open, setOpen] = useState(true);
 
-  const { pickUpLatLng, dropOffLatLng } = useReserveContext();
+  // const [directionService, setDirectionService] = useState(null);
+  // const [directionRenderer, setDirectionRenderer] = useState(null);
+
+  const { pickUpLatLng, dropOffLatLng, pickupLo, dropOffLo } =
+    useReserveContext();
+
+  // useEffect(() => {
+  //   if (!routesLibrary) return;
+  //   setDirectionService(new routesLibrary.DirectionsService());
+  //   setDirectionRenderer(new routesLibrary.DirectionsRenderer({ map }));
+  // }, [routesLibrary]);
 
   useEffect(() => {
-    if (pickup && dropoff) setOpen(false);
-  }, [pickup, dropoff]);
+    if (pickupLo && dropOffLo) setOpen(false);
+  }, [pickupLo, dropOffLo]);
 
   return (
     <>
@@ -50,74 +65,14 @@ function MapRenderer({ pickup, dropoff }) {
                 </AdvancedMarker>
               </>
             )}
-            <Direction
-              origin={
-                {
-                  lat: pickup?.geometry.location.lat(),
-                  lng: pickup?.geometry.location.lng(),
-                } || null
-              }
-              dest={
-                {
-                  lat: dropoff?.geometry.location.lat(),
-                  lng: dropoff?.geometry.location.lng(),
-                } || null
-              }
-            />
+            <Direction />
           </Map>
-          <MapHandler place={pickup || pickUpLatLng} marker={marker} />
-          <MapHandler place={dropoff || dropOffLatLng} marker={secondMarker} />
+          <MapHandler place={pickupLo} marker={marker} />
+          <MapHandler place={dropOffLo} marker={secondMarker} />
         </div>
       </APIProvider>
     </>
   );
 }
-
-// const MapHandler = ({ place, marker }) => {
-//   const map = useMap();
-
-//   useEffect(() => {
-//     if (!map || !place || !marker) return;
-
-//     if (place.geometry?.viewport) {
-//       map.fitBounds(place.geometry?.viewport);
-//     }
-
-//     marker.position = place.geometry?.location;
-//   }, [map, place, marker]);
-//   return null;
-// };
-
-// const PlaceAutoComplete = ({ onPlaceSelect }) => {
-//   const [placeAutoComplete, setPlaceAutoComplete] = useState(null);
-//   const inputRef = useRef(null);
-//   const places = useMapsLibrary("places");
-
-//   useEffect(() => {
-//     if (!places || !inputRef.current) return;
-
-//     const options = {
-//       fields: ["geometry", "name", "formatted_address"],
-//     };
-
-//     setPlaceAutoComplete(new places.Autocomplete(inputRef.current, options));
-//   }, [places]);
-
-//   useEffect(() => {
-//     if (!placeAutoComplete) return;
-//     placeAutoComplete.addListener("place_changed", () => {
-//       onPlaceSelect(placeAutoComplete.getPlace());
-//     });
-//   }, [onPlaceSelect, placeAutoComplete]);
-
-//   return (
-//     <div className="gap-2">
-//       <h1 className="text-lg">Pick up :</h1>
-//       <div className="border-2 border-black w-full">
-//         <input className="w-full h-[40px] py-[12px] text-xl" ref={inputRef} />
-//       </div>
-//     </div>
-//   );
-// };
 
 export default MapRenderer;

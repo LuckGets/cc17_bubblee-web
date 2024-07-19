@@ -2,7 +2,8 @@ import React from "react";
 import BookSubHeader from "./layout/BookSubHeader";
 import BookMainPart from "./pages/OneWayOrRound";
 import { Outlet } from "react-router-dom";
-import BookPageContextProvider from "./context/BookPageContext";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import GoogleContextProvider from "./context/GoogleContext";
 
 function BookWrapper() {
   return (

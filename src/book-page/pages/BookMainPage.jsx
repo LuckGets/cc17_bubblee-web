@@ -7,6 +7,7 @@ import BookForm from "../components/book-page/BookForm";
 import useReserveContext from "../hooks/useReserveContext";
 import { useNavigate } from "react-router-dom";
 import BookNavigateButton from "../layout/BookNavigateButton";
+import { useContext } from "react";
 
 const INIT_NUMBER = {
   adults: 0,
@@ -43,7 +44,7 @@ function BookMainPage() {
     setPickUpTime("");
   };
 
-  const handleSubmitMapPage = (e) => {
+  const handleSubmitMapPage = async (e) => {
     e.preventDefault();
     if (pickupPlace && dropOffPlace && pickUpTime) {
       if (number.adults && number.children) {
@@ -54,6 +55,20 @@ function BookMainPage() {
         setPassengerNum(number.adults);
       }
 
+      if (pickupLo || dropOffLo) {
+        if (pickupLo) {
+          setPickUpLatLng(
+            `${pickupLo.geometry.location.lat()} ${pickupLo.geometry.location.lng()}`
+          );
+          setPickUpPlace(pickupLo?.name);
+        }
+        if (dropOffLo) {
+          setDropOffPlace(dropOffLo?.name);
+          setDropOffLatLng(
+            `${dropOffLo.geometry.location.lat()} ${dropOffLo.geometry.location.lng()}`
+          );
+        }
+      }
       setBagNum(number.bags);
 
       return navigate("/book/model");

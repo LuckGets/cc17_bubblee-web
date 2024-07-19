@@ -162,9 +162,9 @@ function ConfirmModelPage() {
       if (tempOrderId) {
         data.id = tempOrderId;
         setTempOrderId(null);
-        const { data } = await reserveApi.editReserveOrder(data);
-        setTempOrderId(data.id);
-        alert(`Order ${order.id} edited successful!`);
+        const response = await reserveApi.editReserveOrder(data);
+        setTempOrderId(response.data.id);
+        alert(`Order ${response.data.id} edited successful!`);
         return navigate("/book/success");
       }
 
@@ -176,6 +176,10 @@ function ConfirmModelPage() {
       console.log(err);
     }
   };
+
+  if (!pickUpTime) {
+    return navigate("/book/main");
+  }
 
   return (
     <>
@@ -203,7 +207,7 @@ function ConfirmModelPage() {
               <img className="rounded-lg" src={carDetail?.imagePath} />
             </div>
           </div>
-          <MapRenderer pickup={pickupLo} dropoff={dropOffLo} />
+          <MapRenderer />
         </div>
         <div className="flex justify-between pt-10">
           <div className="flex gap-5">

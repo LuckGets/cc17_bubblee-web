@@ -42,8 +42,8 @@ function Testimonial() {
     <div className="py-10 px-20 flex flex-col items-center gap-10">
       <h1 className="text-4xl">What Our Client says about us</h1>
       <div className="grid grid-cols-2 gap-20">
-        {testTimonArr.map((item) => (
-          <TestimonialCard details={item} />
+        {testTimonArr.map((item, index) => (
+          <TestimonialCard key={index} details={item} />
         ))}
       </div>
     </div>

@@ -10,6 +10,7 @@ import { MapMarker } from "../../../assets/icons/icons";
 import { useEffect } from "react";
 import convertISOtoLocal from "../../../utils/convertISOtoLocal";
 import formatDateTime from "../../../utils/formatDateTime";
+import GoogleContextProvider from "../../context/GoogleContext";
 
 const nowDate = Date.now() + 86400000;
 const date = new Date(nowDate);
@@ -57,7 +58,6 @@ function BookForm() {
       const { data } = await reserveApi.findReserveOrderDetails({
         id: tempOrderId,
       });
-      console.log(data);
       const formattedDate = formatDateTime(data.pickUpTime);
       setPickUpPlace(data.pickupPlace);
       setPickUpTime(formattedDate);
@@ -68,7 +68,6 @@ function BookForm() {
       });
       setModelId(data.modelId);
       setDropOffPlace(data.dropOffPlace);
-      setDistance(data.distance);
       setPickUpLatLng(data.pickUpLatLng);
       setDropOffLatLng(data.dropOffLatLng);
       setDuration(data.duration);
@@ -82,45 +81,43 @@ function BookForm() {
   }, []);
 
   return (
-    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-      <div className="flex justify-between gap-2 ">
-        <div className="flex flex-col justify-between ">
-          <div className="px-5">
-            <InputTime date={pickUpTime} min={dateString} />
-          </div>
-          <div className="flex flex-col gap-2 bg-gray-200 p-5 my-5 w-full rounded-lg">
-            <h1>Location :</h1>
-            <div className="flex items-center bg-white px-5 rounded-lg">
-              <h1 className="text-md text-gray-500 pr-3 w-2/12">Pick up :</h1>
-              <div className="w-3">
-                <MapMarker />
-              </div>
-              <PlaceAutoComplete
-                onPlaceSelect={setPickUpLo}
-                value={pickupLo?.formatted_address}
-                placeholder={pickupPlace || "Search a location"}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-2 p-5 my-5 bg-gray-200 w-full rounded-lg">
-            <h1 className="text-lg">Location :</h1>
-            <div className="flex items-center px-5 bg-white border-black">
-              <h1 className="text-md text-gray-500 pr-3 w-2/12">Drop Off :</h1>
-              <div className="w-3">
-                <MapMarker />
-              </div>
-              <PlaceAutoComplete
-                onPlaceSelect={setDropOffLo}
-                value={dropOffLo?.formatted_address || dropOffPlace}
-                placeholder={dropOffPlace || "Search a location"}
-              />
-            </div>
-          </div>
-          <CounterPart />
+    <div className="flex justify-between gap-2 ">
+      <div className="flex flex-col justify-between ">
+        <div className="px-5">
+          <InputTime date={pickUpTime} min={dateString} />
         </div>
-        <MapRenderer pickup={pickupLo} dropoff={dropOffLo} />
+        <div className="flex flex-col gap-2 bg-gray-200 p-5 my-5 w-full rounded-lg">
+          <h1>Location :</h1>
+          <div className="flex items-center bg-white px-5 rounded-lg">
+            <h1 className="text-md text-gray-500 pr-3 w-2/12">Pick up :</h1>
+            <div className="w-3">
+              <MapMarker />
+            </div>
+            <PlaceAutoComplete
+              onPlaceSelect={setPickUpLo}
+              value={pickupLo?.formatted_address}
+              placeholder={pickupPlace || "Search a location"}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 p-5 my-5 bg-gray-200 w-full rounded-lg">
+          <h1 className="text-lg">Location :</h1>
+          <div className="flex items-center px-5 bg-white border-black">
+            <h1 className="text-md text-gray-500 pr-3 w-2/12">Drop Off :</h1>
+            <div className="w-3">
+              <MapMarker />
+            </div>
+            <PlaceAutoComplete
+              onPlaceSelect={setDropOffLo}
+              value={dropOffLo?.formatted_address || dropOffPlace}
+              placeholder={dropOffPlace || "Search a location"}
+            />
+          </div>
+        </div>
+        <CounterPart />
       </div>
-    </APIProvider>
+      <MapRenderer />
+    </div>
   );
 }
 
